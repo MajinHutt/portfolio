@@ -1,0 +1,45 @@
+#!/bin/sh
+#
+# Pre-commit guards. Enable once with:  npm run install-hooks
+#
+#   1. Identity  — this is James's repo; commits must be authored by him.
+#   2. Cost      — no serverless functions, no heavy binaries in Git.
+#
+
+# ── 1. Identity ─────────────────────────────────────────────────────────────
+# This machine's *global* Git identity belongs to someone else, so relying on it
+# would attribute James's portfolio to the wrong person. Require an explicit
+# repo-local identity instead.
+LOCAL_EMAIL=$(git config --local user.email)
+LOCAL_NAME=$(git config --local user.name)
+
+if [ -z "$LOCAL_EMAIL" ] || [ -z "$LOCAL_NAME" ]; then
+  echo ""
+  echo "Commit blocked: no repo-local Git identity set."
+  echo ""
+  echo "  This repo belongs to James. Set his details once, here only:"
+  echo ""
+  echo "    git config user.name  \"James Hutt\""
+  echo "    git config user.email \"james-github-email@example.com\""
+  echo ""
+  echo "  Use the same email as his GitHub account. See docs/DEPLOYMENT.md."
+  echo ""
+  exit 1
+fi
+
+# ── 2. Cost guards ──────────────────────────────────────────────────────────
+echo "Running cost guards before commit..."
+
+if ! node scripts/check-static.mjs; then
+  echo ""
+  echo "Commit blocked: see docs/COST-CONTROLS.md"
+  exit 1
+fi
+
+if ! node scripts/check-assets.mjs; then
+  echo ""
+  echo "Commit blocked: see docs/ASSET-HOSTING.md"
+  exit 1
+fi
+
+exit 0

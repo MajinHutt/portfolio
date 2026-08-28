@@ -1,0 +1,323 @@
+"use client";
+
+import { Suspense, useEffect, useLayoutEffect, useRef } from "react";
+import { Canvas } from "@react-three/fiber";
+import {
+  AdaptiveDpr,
+  Bounds,
+  Environment,
+  Lightformer,
+  OrbitControls,
+  useGLTF,
+  useProgress,
+} from "@react-three/drei";
+import * as THREE from "three";
+import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
+import { PlaceholderIsland } from "./PlaceholderIsland";
+import { Bloom, EffectComposer, Vignette } from "@react-three/postprocessing";
+import type { ViewerMode } from "./types";
+
+/**
+ * Cinematic grade. Two effects only, both deliberately restrained.
+ *
+ * The failure mode of postprocessing on a portfolio is obvious: heavy bloom and
+ * chromatic aberration read as a filter applied to hide the model rather than
+ * to present it. A modeller looking at this wants to see topology and material
+ * response, not a glow.
+ *
+ * So: bloom with a high luminance threshold, which means only genuine
+ * highlights (a specular hit, an emissive) pick up any lift at all, and nothing
+ * mid-tone does. Plus a vignette shallow enough that you would not name it if
+ * asked what was different, but which stops the render bleeding into the plate
+ * edges and keeps the eye centred.
+ *
+ * Chromatic aberration, depth of field, noise and scanlines were all
+ * considered and rejected: each one obscures the thing being shown.
+ *
+ * Set CINEMATIC to false to turn the whole pass off.
+ */
+const CINEMATIC = true;
+
+/**
+ * The R3F scene. Loaded via next/dynamic with `ssr: false` from ProjectViewer,
+ * so three.js stays out of the initial bundle entirely.
+ *
+ * Why react-three-fiber and not <model-viewer>: the design requires
+ * Shaded / Wireframe / Clay display modes that swap materials on the loaded
+ * mesh. <model-viewer> has no material-override API for that: you'd be reaching
+ * into its internal scene graph anyway. Since we need R3F for the detail page,
+ * using it for the hero too avoids shipping two 3D runtimes. (See docs/DECISIONS.md.)
+ */
+
+/** Materials used for the non-shaded display modes. Created once. */
+const WIREFRAME_MATERIAL = new THREE.MeshBasicMaterial({
+  color: "#f3f2f2",
+  wireframe: true,
+});
+
+const CLAY_MATERIAL = new THREE.MeshStandardMaterial({
+  color: "#d7d3d3",
+  roughness: 0.85,
+  metalness: 0,
+});
+
+/**
+ * Swaps materials on every mesh below it to match the active display mode,
+ * stashing the original on first run so "Shaded" can be restored exactly.
+ */
+function DisplayMode({
+  mode,
+  children,
+}: {
+  mode: ViewerMode;
+  children: React.ReactNode;
+}) {
+  const group = useRef<THREE.Group>(null);
+
+  useLayoutEffect(() => {
+    const root = group.current;
+    if (!root) return;
+
+    root.traverse((child) => {
+      if (!(child instanceof THREE.Mesh)) return;
+
+      // Stash the original once.
+      if (!child.userData.originalMaterial) {
+        child.userData.originalMaterial = child.material;
+      }
+
+      if (mode === "wireframe") {
+        child.material = WIREFRAME_MATERIAL;
+      } else if (mode === "clay") {
+        child.material = CLAY_MATERIAL;
+      } else {
+        child.material = child.userData.originalMaterial;
+      }
+    });
+  }, [mode, children]);
+
+  return <group ref={group}>{children}</group>;
+}
+
+function LoadedModel({ url }: { url: string }) {
+  const { scene } = useGLTF(url, "/draco/");
+
+  // Enable shadow casting on the author's geometry.
+  useLayoutEffect(() => {
+    scene.traverse((child) => {
+      if (child instanceof THREE.Mesh) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+      }
+    });
+  }, [scene]);
+
+  return <primitive object={scene} />;
+}
+
+/**
+ * Auto-rotate until the viewer is first touched, then stop for good:
+ * and never start at all under prefers-reduced-motion.
+ */
+function Controls({
+  interacted,
+  allowZoom,
+}: {
+  interacted: React.MutableRefObject<boolean>;
+  allowZoom: boolean;
+}) {
+  const controls = useRef<OrbitControlsImpl>(null);
+  const reducedMotion = useRef(false);
+
+  useEffect(() => {
+    reducedMotion.current =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion.current && controls.current) {
+      controls.current.autoRotate = false;
+    }
+  }, []);
+
+  return (
+    <OrbitControls
+      ref={controls}
+      makeDefault
+      enableDamping
+      dampingFactor={0.08}
+      enablePan={false}
+      // The hero is a full-bleed background: if it swallowed the wheel event
+      // the page would become unscrollable over it. Drag-to-orbit still works.
+      enableZoom={allowZoom}
+      autoRotate={!interacted.current}
+      autoRotateSpeed={0.6}
+      minDistance={2}
+      maxDistance={14}
+      // Constrain vertical orbit so the model can't be viewed from underneath.
+      minPolarAngle={0.15}
+      maxPolarAngle={Math.PI * 0.495}
+      onStart={() => {
+        interacted.current = true;
+        if (controls.current) controls.current.autoRotate = false;
+      }}
+    />
+  );
+}
+
+/**
+ * Reports load progress up to the wrapper so the overlay can be determinate.
+ * Lives inside the Canvas so drei is never pulled into the main bundle.
+ */
+function ProgressReporter({
+  onProgress,
+}: {
+  onProgress: (percent: number) => void;
+}) {
+  const { progress, active } = useProgress();
+
+  useEffect(() => {
+    onProgress(active ? progress : 100);
+  }, [progress, active, onProgress]);
+
+  return null;
+}
+
+/** Fires once the suspended model has actually resolved. */
+function LoadSignal({ onLoaded }: { onLoaded: () => void }) {
+  useEffect(() => {
+    onLoaded();
+  }, [onLoaded]);
+  return null;
+}
+
+export default function ModelStage({
+  url,
+  mode,
+  allowZoom,
+  active,
+  onProgress,
+  onLoaded,
+  onContextLost,
+}: {
+  url: string | null;
+  mode: ViewerMode;
+  allowZoom: boolean;
+  /** False when the stage is scrolled well off screen: stops the render loop. */
+  active: boolean;
+  onProgress: (percent: number) => void;
+  onLoaded: () => void;
+  onContextLost: () => void;
+}) {
+  const interacted = useRef(false);
+
+  return (
+    <Canvas
+      shadows="soft"
+      dpr={[1, 2]}
+      // Stops rendering entirely when scrolled away: no GPU, no battery drain.
+      frameloop={active ? "always" : "never"}
+      // Lets AdaptiveDpr drop resolution rather than drop frames on weak GPUs.
+      performance={{ min: 0.5 }}
+      camera={{ position: [4.5, 3, 5.5], fov: 38 }}
+      gl={{
+        antialias: true,
+        preserveDrawingBuffer: false,
+        powerPreference: "high-performance",
+      }}
+      onCreated={({ gl }) => {
+        // The plate colour, so there is no flash of a different ground.
+        gl.setClearColor("#16150f");
+        // Filmic tone mapping holds highlights instead of clipping them to
+        // white, which is what makes a render read as a render rather than as
+        // a screenshot of a viewport.
+        gl.toneMapping = THREE.ACESFilmicToneMapping;
+        gl.toneMappingExposure = 1.05;
+        gl.shadowMap.type = THREE.PCFSoftShadowMap;
+        gl.domElement.addEventListener("webglcontextlost", onContextLost);
+      }}
+    >
+      {/* Explicit three-point lighting rather than drei's <Environment preset>,
+          which would fetch a multi-megabyte HDRI from a third-party CDN on every
+          page view. Swap it in later if you want truer reflections. */}
+      <ambientLight intensity={0.55} />
+      <hemisphereLight args={["#cfd8dc", "#2b2a24", 0.45]} />
+      <directionalLight
+        position={[5, 7, 4]}
+        intensity={2.1}
+        castShadow
+        shadow-mapSize={[1024, 1024]}
+        shadow-bias={-0.0005}
+      />
+      <directionalLight position={[-6, 3, -4]} intensity={0.6} color="#ffd9c9" />
+
+      {/* A studio environment built from light shapes rather than loaded from
+          an HDRI file. Same benefit for reflections and roughness response,
+          with no multi-megabyte download from a third-party CDN. `frames={1}`
+          bakes it once instead of every frame. */}
+      <Environment resolution={256} frames={1}>
+        <Lightformer
+          form="rect"
+          intensity={3}
+          position={[0, 4, 2]}
+          scale={[9, 4, 1]}
+          color="#fff6ef"
+        />
+        <Lightformer
+          form="rect"
+          intensity={1.2}
+          position={[-5, 1, -2]}
+          rotation={[0, Math.PI / 2, 0]}
+          scale={[6, 4, 1]}
+          color="#cfe0ff"
+        />
+        <Lightformer
+          form="ring"
+          intensity={0.9}
+          position={[4, 2, 3]}
+          scale={3}
+          color="#ffd9c9"
+        />
+      </Environment>
+
+      <ProgressReporter onProgress={onProgress} />
+
+      <Suspense fallback={null}>
+        <Bounds fit clip observe margin={1.25}>
+          <DisplayMode mode={mode}>
+            {url ? <LoadedModel url={url} /> : <PlaceholderIsland />}
+          </DisplayMode>
+        </Bounds>
+        <LoadSignal onLoaded={onLoaded} />
+      </Suspense>
+
+      <Controls interacted={interacted} allowZoom={allowZoom} />
+
+      {/* Wireframe mode is a technical read, not a presentation one: the grade
+          would only sit between the viewer and the topology, so it is skipped. */}
+      {CINEMATIC && mode !== "wireframe" && (
+        <EffectComposer enableNormalPass={false} multisampling={0}>
+          <Bloom
+            // Only true highlights lift. At 0.9 a mid-grey surface contributes
+            // nothing, which is what keeps this from looking like a filter.
+            luminanceThreshold={0.9}
+            luminanceSmoothing={0.28}
+            intensity={0.45}
+            mipmapBlur
+          />
+          <Vignette offset={0.32} darkness={0.42} eskil={false} />
+        </EffectComposer>
+      )}
+
+      {/* Drops pixel ratio while the camera is moving, restores it when still:
+          smooth orbiting on a laptop, full crispness the moment you let go. */}
+      <AdaptiveDpr pixelated={false} />
+    </Canvas>
+  );
+}
+
+/**
+ * Warm the cache for a model before its viewer mounts. Called from the
+ * homepage for the hero piece, so the first thing a visitor sees is ready.
+ */
+export function preloadModel(url: string) {
+  useGLTF.preload(url, "/draco/");
+}

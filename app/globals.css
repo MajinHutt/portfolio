@@ -1,0 +1,150 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Modernist tokens ──────────────────────────────────────────────────────
+   Mirrors tailwind.config.ts so raw CSS (and any future non-Tailwind styling)
+   reads from the same source of truth as the utility classes. */
+:root {
+  --color-bg: #44403c;
+  --color-surface: #524d48;
+  --color-panel: #2b2724;
+  --color-ink: #201e1d;
+  --color-stage: #16150f;
+  --color-fg: #f7f6f5;
+  --color-fg-muted: #c9c4c1;
+  --color-accent: #dd2b0f;
+  --color-accent-200: #ffe0d9;
+  --color-accent-400: #ff9783;
+  --color-accent-500: #ff563c;
+  --color-accent-700: #ae1800;
+  --color-accent-800: #7c1405;
+  --color-neutral-200: #eae7e7;
+  --color-neutral-800: #444141;
+  --color-divider: rgba(247, 246, 245, 0.5);
+  --color-divider-light: rgba(247, 246, 245, 0.45);
+  --color-on-dark: #f7f6f5;
+  --color-on-dark-rule: rgba(247, 246, 245, 0.25);
+  --gutter: 40px;
+}
+
+@media (max-width: 899px) {
+  :root { --gutter: 24px; }
+}
+@media (max-width: 599px) {
+  :root { --gutter: 16px; }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-size: 15px;
+    line-height: 1.55;
+    /* The page ground is dark stone; tell the browser so form controls,
+       scrollbars and the like match rather than flashing white. */
+    color-scheme: dark;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Never the browser default: spec calls this out explicitly. */
+  :focus { outline: none; }
+  :focus-visible {
+    /* The lighter red step: #dd2b0f is too close to the stone ground to be a
+       reliable focus indicator. This clears 3:1 against the page. */
+    outline: 2px solid var(--color-accent-400);
+    outline-offset: 2px;
+  }
+
+  :selection {
+    background: rgba(255, 151, 131, 0.35);
+  }
+}
+
+@layer components {
+  /* Text roles from the handoff's typography table. */
+  .t-hero {
+    font-size: 84px;
+    font-weight: 900;
+    letter-spacing: -0.035em;
+    line-height: 0.92;
+    text-transform: uppercase;
+  }
+  .t-detail-h1 {
+    font-size: 46px;
+    font-weight: 900;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+  .t-h2 {
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.12;
+    text-transform: uppercase;
+  }
+  .t-h3 {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.12;
+  }
+  .t-eyebrow {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .t-nav {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .t-button {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .t-tag {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 1199px) {
+    .t-hero { font-size: 64px; }
+  }
+  @media (max-width: 899px) {
+    .t-hero { font-size: 48px; }
+    .t-h2 { font-size: 34px; }
+    .t-detail-h1 { font-size: 38px; }
+  }
+  @media (max-width: 599px) {
+    .t-hero { font-size: 36px; }
+    .t-h2 { font-size: 28px; }
+    .t-h3 { font-size: 22px; }
+  }
+}
+
+/* Reduced motion: kill auto-rotate, image scale, and entrance animation. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *:before,
+  *:after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
