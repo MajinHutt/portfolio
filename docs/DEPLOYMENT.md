@@ -62,27 +62,28 @@ Then go straight to Step 2.
 
 ## Step 2: push the site to GitHub (done)
 
-The repo is live at **https://github.com/MajinHutt/portfolio**, under James's
-account, and local is in sync with it.
+The repo is live at **https://github.com/MajinHutt/portfolio**, public, under
+James's account. The working branch is **`main`** and local is in sync with it.
 
-The branch is called `master` (the name `create-next-app` used), not `main`.
-Nothing is wrong with that and Vercel handles either, but `main` is the current
-convention and this repo is something recruiters may look at. If you want to
-rename it, do it **before** connecting Vercel, because afterwards the
-production branch has to be changed in the Vercel dashboard too:
+### One thing still outstanding
 
-```bash
-git branch -m master main
-```
+The remote still carries the old `master` branch, and GitHub still lists it as
+the repository default. Two clicks, signed in as James, fixes it:
+
+1. **Settings → General → Default branch**, switch it to `main`, confirm.
+2. Then delete the stale branch:
 
 ```bash
-git push -u origin main
+git push origin --delete master
 ```
 
-Then on GitHub: **Settings → General → Default branch**, switch it to `main`,
-and delete the old `master` branch when it offers.
+Do this **before** connecting Vercel. Vercel reads the default branch when the
+project is imported and treats it as production, so importing while `master` is
+still the default would point production at a branch you are about to delete.
 
-Day to day, pushing is all that is needed. Vercel rebuilds on its own:
+### Day to day
+
+Pushing is all that is needed. Vercel rebuilds on its own:
 
 ```bash
 git add -A && git commit -m "Add project: Red Velvet Chair" && git push
