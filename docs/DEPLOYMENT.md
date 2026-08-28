@@ -60,25 +60,35 @@ Vercel is linked to it. Two things worth confirming while you're there:
 
 Then go straight to Step 2.
 
-## Step 2: Push the site to GitHub
+## Step 2: push the site to GitHub (done)
 
-1. On GitHub: **+ → New repository**.
-   - Name: `portfolio` (or `jameshutt.co.uk`)
-   - **Public**: recruiters and admissions tutors can look, which is a plus.
-   - Do **not** tick "Add a README": the repo already has files.
-2. GitHub then shows a "push an existing repository" snippet. It'll look like
-   this, with his username:
+The repo is live at **https://github.com/MajinHutt/portfolio**, under James's
+account, and local is in sync with it.
+
+The branch is called `master` (the name `create-next-app` used), not `main`.
+Nothing is wrong with that and Vercel handles either, but `main` is the current
+convention and this repo is something recruiters may look at. If you want to
+rename it, do it **before** connecting Vercel, because afterwards the
+production branch has to be changed in the Vercel dashboard too:
 
 ```bash
-git remote add origin https://github.com/majinhutt/portfolio.git
+git branch -m master main
 ```
 
 ```bash
 git push -u origin main
 ```
 
-3. First push will ask him to sign in: a browser window, or a Personal Access
-   Token. Follow the prompts; there's nothing to pay for.
+Then on GitHub: **Settings → General → Default branch**, switch it to `main`,
+and delete the old `master` branch when it offers.
+
+Day to day, pushing is all that is needed. Vercel rebuilds on its own:
+
+```bash
+git add -A && git commit -m "Add project: Red Velvet Chair" && git push
+```
+
+---
 
 ## Step 3: Vercel account
 
