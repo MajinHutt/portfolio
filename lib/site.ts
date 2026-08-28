@@ -6,7 +6,13 @@ export const site = {
   name: "James Hutt",
   role: "3D Artist & Modeller",
   shortRole: "3D Artist",
-  url: "https://jameshutt.vercel.app", // TODO: swap for a custom domain if you buy one
+  /**
+   * The stable production alias, not a per-deployment URL. Deployment URLs
+   * carry a random suffix and change on every push, which would silently break
+   * the Open Graph preview card. Swap this for a custom domain if one is ever
+   * bought, then push: nothing else needs changing.
+   */
+  url: "https://portfolio-flax-pi.vercel.app",
   tagline:
     "Self-taught 3D artist and modeller working in Blender. Clean topology, honest materials, and models built to be rigged and animated: not just to look good in one frame.",
   availableFor: ["Studio placements,", "freelance modelling"],
