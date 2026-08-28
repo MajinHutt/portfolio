@@ -159,6 +159,24 @@ The questions are plain text with plain text answers, no distorted letters and
 no images, because an inaccessible CAPTCHA loses more real visitors than the
 bots it stops.
 
+## site.url is verified, not inferred
+
+`npm run check-url` fetches `site.url` and confirms the page contains "James
+Hutt" before declaring it correct.
+
+This exists because of a real mistake made during setup. The live URL is
+`portfolio-flax-pi-n17wrr08c7.vercel.app`, and the shorter
+`portfolio-flax-pi.vercel.app` was assumed to be its stable alias on the
+strength of returning HTTP 200. It is a different person's portfolio. That URL
+reached the Open Graph tags and the sitemap before it was caught.
+
+A 200 proves a server answered. It proves nothing about whose server. Vercel
+generates its domains from the project name, so near-miss collisions with other
+people's projects are common rather than unlikely.
+
+The check is deliberately not part of `npm run guard`: it needs network access,
+and builds have to work offline and inside Vercel's build sandbox.
+
 ## A procedural island stands in for missing models
 
 Rather than an empty black rectangle, a project with no `.glb` yet renders a

@@ -7,12 +7,16 @@ export const site = {
   role: "3D Artist & Modeller",
   shortRole: "3D Artist",
   /**
-   * The stable production alias, not a per-deployment URL. Deployment URLs
-   * carry a random suffix and change on every push, which would silently break
-   * the Open Graph preview card. Swap this for a custom domain if one is ever
-   * bought, then push: nothing else needs changing.
+   * The live production URL, verified to serve this site.
+   *
+   * Do not shorten or "tidy" this by hand. A shorter vercel.app domain that
+   * merely returns HTTP 200 may belong to somebody else entirely: an earlier
+   * edit set this to portfolio-flax-pi.vercel.app, which is another person's
+   * portfolio. Run `npm run check-url` after any change here.
+   *
+   * Replace with a custom domain if one is ever bought, then push.
    */
-  url: "https://portfolio-flax-pi.vercel.app",
+  url: "https://portfolio-flax-pi-n17wrr08c7.vercel.app",
   tagline:
     "Self-taught 3D artist and modeller working in Blender. Clean topology, honest materials, and models built to be rigged and animated: not just to look good in one frame.",
   availableFor: ["Studio placements,", "freelance modelling"],

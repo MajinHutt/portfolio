@@ -52,6 +52,7 @@ npm run install-hooks
 | `npm run guard` | Static-only check, asset check, contrast audit |
 | `npm run check-contrast` | WCAG AA colour audit on its own |
 | `npm run check-uploads -- <dir>` | Checks asset sizes against jsDelivr's limit |
+| `npm run check-url` | Confirms `site.url` actually serves this site |
 | `npm run install-hooks` | Enables the pre-commit guards |
 
 ---
@@ -92,6 +93,12 @@ un-billable.
 real foreground and background pairs against WCAG AA and fails the build on a
 regression. If you change a colour, add or update its pair in
 `scripts/check-contrast.mjs`.
+
+**Never shorten the vercel.app URL by hand.** Generated Vercel domains come
+from the project name, so plausible-looking variants of your own URL often
+belong to other people. `site.url` was briefly pointed at
+`portfolio-flax-pi.vercel.app` during setup because it returned HTTP 200: it is
+a stranger's portfolio. Run `npm run check-url` after any change to it.
 
 **Writing style is British English** (`-ise` endings, colour, modeller,
 analyse), and **no em dashes**: a colon does that job throughout. Code

@@ -11,7 +11,8 @@
     "guard": "node scripts/check-static.mjs && node scripts/check-assets.mjs && node scripts/check-contrast.mjs",
     "install-hooks": "git config core.hooksPath .githooks",
     "check-uploads": "node scripts/check-uploads.mjs",
-    "check-contrast": "node scripts/check-contrast.mjs"
+    "check-contrast": "node scripts/check-contrast.mjs",
+    "check-url": "node scripts/check-url.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^9.114.3",
