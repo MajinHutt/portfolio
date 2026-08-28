@@ -13,19 +13,22 @@ requires users to be at least 13.
 
 ---
 
-## Step 0: Fix the repo's authorship first
+## Step 0: repo authorship (already done)
 
 The project was scaffolded on a machine whose global Git identity belongs to
-someone else, so the one existing commit is attributed to the wrong person.
-Clear it out and let James make the first commit himself.
+someone else, so the one commit `create-next-app` made was attributed to the
+wrong person. That has been fixed: the commit was amended so the history now
+contains a single commit authored by **James Hutt <jpfhutt@gmail.com>**, and
+nothing anywhere in the history carries the other name.
 
-In a terminal, from the `james-hutt-portfolio` folder:
+Confirm it yourself at any time:
 
 ```bash
-rm -rf .git && git init -b main
+git log --format="%an <%ae>"
 ```
 
-Then set **his** identity, for this repo only:
+The repo-local identity and the safety hooks are set already. If you ever clone
+this fresh, set them again:
 
 ```bash
 git config user.name "James Hutt"
@@ -35,20 +38,12 @@ git config user.name "James Hutt"
 git config user.email "jpfhutt@gmail.com"
 ```
 
-Turn on the safety hooks:
-
 ```bash
 npm run install-hooks
 ```
 
-Then make the first commit:
-
-```bash
-git add -A && git commit -m "Initial commit: portfolio site"
-```
-
-If the commit is refused, read the message: that's the identity or cost guard
-doing its job.
+The pre-commit hook refuses any commit without a repo-local identity, so it is
+not possible to author work under the wrong name by accident.
 
 ---
 
