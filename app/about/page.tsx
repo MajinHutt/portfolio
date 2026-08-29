@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { site } from "@/lib/site";
-import { projects } from "@/lib/projects";
 
 export const metadata: Metadata = {
   title: "About",
@@ -33,6 +32,60 @@ const SKILLS: { group: string; items: string[] }[] = [
       "Geometry Nodes",
       "UV layout without stretching",
     ],
+  },
+];
+
+/** From James's CV. Years are the award year. */
+const EDUCATION = [
+  {
+    title: "BA (Hons) 3D Animation",
+    where: "Currently applying",
+    year: "2027",
+  },
+  {
+    title: "Level 3 Diploma Practitioner in Personal Training (RQF)",
+    where: "",
+    year: "2026",
+  },
+  {
+    title: "Level 3 Award in Emergency First Aid at Work (RQF)",
+    where: "",
+    year: "2026",
+  },
+  {
+    title: "A Levels: Geography, Biology, Economics",
+    where: "Malmesbury Sixth Form",
+    year: "2025",
+  },
+  {
+    title:
+      "GCSEs: English Language, English Literature, Maths, Science, Sports Science, Creative iMedia, Geography",
+    where: "Malmesbury Comprehensive School",
+    year: "2023",
+  },
+];
+
+const EXPERIENCE = [
+  {
+    title: "Fitness coach and personal trainer",
+    where: "PureGym Chippenham",
+    year: "May to Aug 2026",
+  },
+  { title: "Team member", where: "Co-op Lyneham", year: "Jul to Dec 2025" },
+  {
+    title: "Work experience",
+    where: "PD Fitness Malmesbury",
+    year: "Jul 2024",
+  },
+  {
+    title: "Team member",
+    where: "Co-op Malmesbury",
+    year: "Jun to Sep 2024",
+  },
+  {
+    title: "Assistant coach",
+    where: "Ignition Tennis",
+    year: "2021 to 2023",
   },
 ];
 
@@ -141,38 +194,65 @@ export default function AboutPage() {
           </div>
 
           <div className="px-4 pb-8 pt-2 min-[900px]:px-10 min-[900px]:py-9">
-            {/*
-              TODO James: your CV has not been supplied yet, so this section
-              lists only what can be stated accurately. Add your A-level
-              subjects and grades, the school or college names, and the dates
-              for each, taken straight from the CV. Admissions tutors look for
-              exactly these.
-            */}
-            <dl>
-              {[
-                { label: "Currently applying", value: "BA (Hons) 3D Animation" },
-                { label: "Diploma", value: "Personal Training" },
-                { label: "Software", value: "Blender, self-taught" },
-                {
-                  label: "Portfolio",
-                  value: `${projects.length} pieces published`,
-                },
-              ].map((row, i) => (
-                <div
-                  key={row.label}
-                  className={`flex flex-col gap-1 py-3 min-[600px]:flex-row min-[600px]:items-baseline min-[600px]:justify-between min-[600px]:gap-6 ${
+            <ul>
+              {EDUCATION.map((row, i) => (
+                <li
+                  key={row.title}
+                  className={`flex flex-col gap-1 py-4 min-[600px]:flex-row min-[600px]:items-baseline min-[600px]:justify-between min-[600px]:gap-8 ${
                     i > 0 ? "border-t border-divider-light" : ""
                   }`}
                 >
-                  <dt className="t-eyebrow shrink-0 text-fg-muted">{row.label}</dt>
-                  <dd className="text-[15px] font-semibold text-fg min-[600px]:text-right">
-                    {row.value}
-                  </dd>
-                </div>
+                  <div>
+                    <p className="text-[15px] font-semibold leading-[1.4] text-fg">
+                      {row.title}
+                    </p>
+                    {row.where && (
+                      <p className="mt-1 text-[13px] text-fg-muted">{row.where}</p>
+                    )}
+                  </div>
+                  <span className="t-eyebrow shrink-0 text-accent-400">
+                    {row.year}
+                  </span>
+                </li>
               ))}
-            </dl>
+            </ul>
+          </div>
+        </div>
+      </section>
 
-            <div className="mt-7 flex flex-wrap gap-2">
+      {/* Experience: not 3D work, and presented as such. It is here because an
+          admissions tutor reads a part-time job history as evidence of somebody
+          who turns up, and the coaching roles are where the biomechanics
+          knowledge in the About text actually came from. */}
+      <section className="border-b-2 border-divider">
+        <div className="mx-auto grid max-w-page grid-cols-1 min-[900px]:grid-cols-[380px_1fr]">
+          <div className="px-4 pb-2 pt-7 min-[900px]:border-r-2 min-[900px]:border-divider min-[900px]:py-9 min-[900px]:pl-10 min-[900px]:pr-8">
+            <h2 className="t-h2 text-fg">Experience</h2>
+          </div>
+
+          <div className="px-4 pb-8 pt-2 min-[900px]:px-10 min-[900px]:py-9">
+            <ul className="mb-7">
+              {EXPERIENCE.map((row, i) => (
+                <li
+                  key={`${row.title}-${row.where}`}
+                  className={`flex flex-col gap-1 py-4 min-[600px]:flex-row min-[600px]:items-baseline min-[600px]:justify-between min-[600px]:gap-8 ${
+                    i > 0 ? "border-t border-divider-light" : ""
+                  }`}
+                >
+                  <div>
+                    <p className="text-[15px] font-semibold leading-[1.4] text-fg">
+                      {row.title}
+                    </p>
+                    <p className="mt-1 text-[13px] text-fg-muted">{row.where}</p>
+                  </div>
+                  <span className="t-eyebrow shrink-0 text-fg-muted">
+                    {row.year}
+                  </span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="flex flex-wrap gap-2">
               <Link
                 href="/#portfolio"
                 className="t-button inline-flex items-center whitespace-nowrap border-2 border-divider bg-accent px-[18px] py-3 text-white no-underline transition-colors duration-[140ms] ease-out hover:bg-accent-700"
