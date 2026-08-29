@@ -118,6 +118,25 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
             ))}
           </div>
 
+          {project.artstation && (
+            <div className="border-b-2 border-divider px-4 py-4 min-[900px]:px-8">
+              <a
+                href={project.artstation}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center justify-between gap-4 text-[13px] font-bold text-fg no-underline transition-colors duration-[140ms] ease-out hover:text-accent-400"
+              >
+                View the original post on ArtStation
+                <span
+                  aria-hidden="true"
+                  className="shrink-0 transition-transform duration-[200ms] ease-out group-hover:translate-x-1 motion-reduce:transition-none"
+                >
+                  &rarr;
+                </span>
+              </a>
+            </div>
+          )}
+
           <div className="border-b-2 border-divider px-4 py-5 min-[900px]:px-8 min-[900px]:py-6">
             <p className="t-eyebrow mb-3 text-fg-muted">Tools</p>
             <ul className="flex flex-wrap gap-2">

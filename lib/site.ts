@@ -19,7 +19,6 @@ export const site = {
   url: "https://portfolio-flax-pi-n17wrr08c7.vercel.app",
   tagline:
     "Self-taught 3D artist and modeller working in Blender. Clean topology, honest materials, and models built to be rigged and animated: not just to look good in one frame.",
-  availableFor: ["Studio placements,", "freelance modelling"],
   /**
    * ROT13 of the real address. It is never written out in the markup, so a
    * crawler scraping HTML for an email pattern finds nothing. It is assembled
@@ -27,21 +26,28 @@ export const site = {
    */
   emailEncoded: "wcsuhgg@tznvy.pbz",
   links: [
-    { label: "ArtStation", href: "https://www.artstation.com/" }, // TODO: your profile URL
-    { label: "Instagram", href: "https://www.instagram.com/" }, // TODO: your profile URL
-    { label: "LinkedIn", href: "https://www.linkedin.com/" }, // TODO: your profile URL
+    { label: "ArtStation", href: "https://www.artstation.com/james_hutt" },
+    {
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/james-hutt-3b518b385/",
+    },
   ],
   cvPath: "/james-hutt-cv.pdf",
   /** Art and look-development tools: what the work is made in. */
-  toolset: ["Blender", "Cycles", "Geometry Nodes", "Substance", "Krita"],
+  toolset: [
+    "Blender",
+    "Hard surface modelling",
+    "Geometry Nodes",
+    "Cycles rendering",
+  ],
   /** How the portfolio itself is built and shipped. */
   workflowTools: ["GitHub", "Vercel", "Claude"],
   stats: [
-    { value: "4", label: "Projects" },
+    { value: "3", label: "Projects" },
     { value: "Blender", label: "Primary toolset" },
   ],
   aboutBody:
-    "I taught myself Blender in 2023 and have been modelling most days since. I care about the parts nobody sees in a render: edge flow that survives a subdivision, UVs that don't stretch when a shape key fires, rigs another animator could pick up. I'm applying to study 3D Animation at degree level to put that under proper direction.",
+    "I taught myself Blender throughout 2026. I care about the parts nobody sees in a render: edge flow that survives a subdivision and UVs that don't stretch. With a diploma in Personal Training, I'm able to take expert understanding of biomechanics and planes of movement, to create the most compelling and realistic characters and scenes. I'm applying to study 3D Animation at degree level to take my creative ability to the next level and pursue a career in 3D modelling and design.",
 } as const;
 
 export const nav = [

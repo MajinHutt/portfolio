@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { CvLink } from "@/components/CvLink";
 import { ContactOptions, type ContactSubject } from "@/components/human/ContactOptions";
 import { site } from "@/lib/site";
 
@@ -90,15 +89,6 @@ export default function ContactPage() {
               ))}
             </ul>
 
-            <p className="t-eyebrow mb-3 text-fg-muted">Available for</p>
-            <p className="mb-6 text-[24px] font-extrabold leading-[1.2] tracking-h3 text-fg">
-              Studio placements, freelance modelling
-            </p>
-
-            <CvLink
-              label="Curriculum vitae"
-              className="t-button inline-flex items-center whitespace-nowrap border-2 border-divider bg-accent px-[18px] py-3 text-white no-underline transition-colors duration-[140ms] ease-out hover:bg-accent-700"
-            />
           </div>
         </div>
       </section>

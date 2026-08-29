@@ -19,28 +19,19 @@ const SKILLS: { group: string; items: string[] }[] = [
   {
     group: "Modelling",
     items: [
+      "Hard surface modelling",
       "Subdivision surface modelling",
-      "Hard-surface and boolean workflows",
-      "Retopology for animation",
-      "Modular and instanced assets",
+      "Topology and edge flow",
+      "Low poly and stylised forms",
     ],
   },
   {
     group: "Look development",
     items: [
-      "Procedural shading in Cycles",
+      "Materials and shading in Cycles",
+      "Lighting for realism",
       "Geometry Nodes",
-      "UV layout and texel density",
-      "PBR texturing in Substance",
-    ],
-  },
-  {
-    group: "Rigging and animation",
-    items: [
-      "Biped control rigs, IK/FK",
-      "Corrective shape keys and drivers",
-      "Weight painting and deformation",
-      "Walk cycles and blocking",
+      "UV layout without stretching",
     ],
   },
 ];
@@ -62,16 +53,17 @@ export default function AboutPage() {
               </p>
               <p className="mb-5 text-[15px] leading-[1.6] text-fg-muted">
                 Most of what I know came from rebuilding the same things until
-                they stopped breaking. A mug handle that pinched under
-                subdivision taught me more about edge flow than any tutorial,
-                and a shoulder that collapsed at full raise taught me why
-                correctives exist. That is the pattern of everything in this
-                portfolio: find the thing that fails, then work out why.
+                they stopped breaking. A LEGO minifigure taught me that simple
+                forms are the least forgiving, because everyone already knows
+                what they should look like. A dining chair from my own house
+                taught me how far materials and lighting carry a render once the
+                shape is right.
               </p>
               <p className="text-[15px] leading-[1.6] text-fg-muted">
-                I am applying to study 3D Animation at degree level because I
-                want that process under proper direction, alongside people who
-                will tell me when something is wrong.
+                The personal training background is not a detour. Knowing how a
+                body actually moves, which planes it moves through and what
+                drives each motion, is the difference between a character that
+                reads as alive and one that reads as posed.
               </p>
             </div>
 
@@ -100,10 +92,6 @@ export default function AboutPage() {
                 ))}
               </ul>
 
-              <p className="t-eyebrow mb-3 text-fg-muted">Working since</p>
-              <p className="text-[34px] font-black leading-[1.1] tracking-h2 text-fg">
-                2023
-              </p>
             </div>
           </div>
         </div>
@@ -116,7 +104,7 @@ export default function AboutPage() {
             <h2 className="t-h2 text-fg">Skills</h2>
           </div>
 
-          <div className="grid grid-cols-1 min-[600px]:grid-cols-3">
+          <div className="grid grid-cols-1 min-[600px]:grid-cols-2">
             {SKILLS.map((column, i) => (
               <div
                 key={column.group}
@@ -153,13 +141,18 @@ export default function AboutPage() {
           </div>
 
           <div className="px-4 pb-8 pt-2 min-[900px]:px-10 min-[900px]:py-9">
-            {/* TODO James: replace these two rows with your actual A-levels,
-                grades and school. Admissions tutors will look for them. */}
+            {/*
+              TODO James: your CV has not been supplied yet, so this section
+              lists only what can be stated accurately. Add your A-level
+              subjects and grades, the school or college names, and the dates
+              for each, taken straight from the CV. Admissions tutors look for
+              exactly these.
+            */}
             <dl>
               {[
                 { label: "Currently applying", value: "BA (Hons) 3D Animation" },
-                { label: "Qualifications", value: "A-levels: to be confirmed" },
-                { label: "Self-directed study", value: "Blender, 2023 to present" },
+                { label: "Diploma", value: "Personal Training" },
+                { label: "Software", value: "Blender, self-taught" },
                 {
                   label: "Portfolio",
                   value: `${projects.length} pieces published`,

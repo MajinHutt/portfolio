@@ -79,7 +79,6 @@ export default function CvPage() {
                   label: "Portfolio pieces",
                   value: `${projects.length} published`,
                 },
-                { label: "Available for", value: "Studio placements, freelance modelling" },
                 { label: "Contact", value: "See the contact page" },
               ].map((row, i) => (
                 <div

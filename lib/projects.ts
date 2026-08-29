@@ -4,11 +4,18 @@
  *
  * Asset fields are paths *relative to your CDN base* (see lib/assets.ts).
  * Leave any of them as "" and the site renders a clean empty plate rather than
- * a broken image: so you can publish a project before every still is finished.
+ * a broken image, so a project can be published before every still is finished.
+ *
+ * Order in this array is the order on the page. Red Velvet Chair leads because
+ * it is the strongest piece, not because it is the newest, though here it
+ * happens to be both.
+ *
+ * Copy is adapted from James's own ArtStation write-ups:
+ *   https://www.artstation.com/james_hutt
  */
 
-export type Discipline = "Environment" | "Hard surface" | "Materials" | "Rigging";
-export type FilterTag = "character" | "environment" | "animation";
+export type Discipline = "Materials" | "Environment" | "Character";
+export type FilterTag = "character" | "environment" | "hard-surface";
 
 export type Breakdown = {
   label: string;
@@ -29,58 +36,107 @@ export type Project = {
   tags: string[];
   year: string;
   blurb: string;
-  /** Paragraph 1 = what it is. Paragraph 2 = the hardest problem, always. */
+  /** Paragraph 1 = what it is. Paragraph 2 = what the work went into. */
   body: [string, string];
   tools: string[];
   specs: { label: string; value: string }[];
   /** Landscape still shown on the card and as the viewer's pre-load poster. */
   poster: string;
   posterAlt: string;
-  /** Draco/Meshopt-compressed .glb on your CDN. "" = poster only, no viewer. */
+  /** Draco-compressed .glb on your CDN. "" = poster only, no viewer. */
   model: string;
-  /** Optional turntable/animation clip for the detail page. */
+  /** Optional turntable or animation clip. */
   video: string;
+  /** Link back to the original ArtStation post, if there is one. */
+  artstation: string;
   breakdowns: Breakdown[];
 };
 
 export const projects: Project[] = [
   {
-    slug: "low-poly-island",
+    slug: "red-velvet-chair",
     index: "01",
+    title: "Red Velvet Dining Chair",
+    titleLines: ["Red Velvet", "Chair"],
+    discipline: "Materials",
+    filters: ["hard-surface"],
+    tags: ["Materials", "Hard surface"],
+    year: "2026",
+    blurb:
+      "A dining chair modelled from life, built to push materials and lighting.",
+    body: [
+      "My third original piece, and the first where I went after realism rather than a style. The reference was a chair from my own dining room, which meant I could put the render next to the real thing and be honest about how close I had actually got.",
+      "Most of the work went into materials and lighting rather than silhouette. Those are the parts that decide whether a familiar object reads as real or as a model of itself, and a chair everyone has seen a hundred times gives you nowhere to hide.",
+    ],
+    tools: ["Blender", "Cycles"],
+    specs: [
+      { label: "Software", value: "Blender" },
+      { label: "Focus", value: "Materials and lighting" },
+      { label: "Reference", value: "Modelled from life" },
+      { label: "Published", value: "August 2026" },
+    ],
+    poster: "red-velvet-chair/poster.jpg",
+    posterAlt:
+      "Render of a red velvet dining chair, modelled and lit in Blender",
+    model: "red-velvet-chair/chair.glb",
+    video: "",
+    artstation: "https://www.artstation.com/artwork/dL8Pm1",
+    breakdowns: [
+      {
+        label: "Wireframe",
+        image: "red-velvet-chair/wireframe.jpg",
+        alt: "Wireframe view of the chair showing its topology",
+      },
+      {
+        label: "UV layout",
+        image: "red-velvet-chair/uv.jpg",
+        alt: "UV layout for the chair",
+      },
+      {
+        label: "Blockout",
+        image: "red-velvet-chair/blockout.jpg",
+        alt: "Early grey blockout of the chair",
+      },
+    ],
+  },
+  {
+    slug: "low-poly-island",
+    index: "02",
     title: "Low Poly Island",
     titleLines: ["Low Poly", "Island"],
     discipline: "Environment",
     filters: ["environment"],
-    tags: ["Environment"],
+    tags: ["Environment", "Stylised"],
     year: "2026",
     blurb:
-      "Stylised terrain study: modular rocks, hand-placed foliage, one shader family.",
+      "A small island out at sea, with a rowboat and a question left unanswered.",
     body: [
-      "A stylised island built as a topology exercise first and a render second. Every rock is a modular asset instanced with geometry nodes, so the silhouette can be recomposed without re-modelling anything.",
-      "The hardest problem was keeping the shoreline reading as low-poly while the water sim needed density: solved with a separate mid-poly collision mesh hidden from camera.",
+      "My second original piece. I love the low poly art style, so I built a small island out at sea with a rowboat pulled up on it, and left a bit of mystery in the scene: why is the rowboat there, and where is the person who sailed it?",
+      "Working stylised does not mean working loosely. With this few polygons every edge is load-bearing, because there is no texture detail to fall back on and the silhouette has to carry the whole read.",
     ],
-    tools: ["Blender 4.2", "Geometry Nodes", "Cycles", "Krita"],
+    tools: ["Blender", "Cycles"],
     specs: [
-      { label: "Tris", value: "184,320" },
-      { label: "Texture sets", value: "3 × 2K" },
-      { label: "Render time", value: "4m 12s / frame" },
-      { label: "Duration", value: "3 weeks" },
+      { label: "Software", value: "Blender" },
+      { label: "Style", value: "Low poly" },
+      { label: "Subject", value: "Island and rowboat" },
+      { label: "Published", value: "July 2026" },
     ],
     poster: "low-poly-island/poster.jpg",
     posterAlt:
-      "Stylised low-poly island render with modular rock formations and hand-placed foliage",
+      "Low poly render of a small island at sea with a rowboat on the shore",
     model: "low-poly-island/island.glb",
     video: "",
+    artstation: "https://www.artstation.com/artwork/5e8JBJ",
     breakdowns: [
       {
         label: "Wireframe",
         image: "low-poly-island/wireframe.jpg",
-        alt: "Wireframe view showing the island's quad topology",
+        alt: "Wireframe view showing the island's low poly topology",
       },
       {
         label: "UV layout",
         image: "low-poly-island/uv.jpg",
-        alt: "UV layout for the island's three texture sets",
+        alt: "UV layout for the island",
       },
       {
         label: "Blockout",
@@ -90,122 +146,46 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "mug",
-    index: "02",
-    title: "Mug",
-    titleLines: ["Ceramic", "Mug"],
-    discipline: "Hard surface",
-    filters: ["environment"],
-    tags: ["Hard surface"],
-    year: "2026",
-    blurb: "Subdivision-ready ceramic: clean quad flow through the handle join.",
-    // TODO James: replace both paragraphs with your own write-up.
-    body: [
-      "A deliberately small subject used to practise subdivision-ready hard-surface flow. The whole form is quads, with support loops placed by hand rather than bevelled after the fact.",
-      "The hardest problem was the handle-to-body join: the first attempt pinched under subdivision. Rebuilding it as a clean transition into surrounding quads, then relaxing the neighbouring loops, fixed the shading without adding density.",
-    ],
-    tools: ["Blender 4.2", "Cycles", "Substance"],
-    specs: [
-      { label: "Tris", value: "TBC" },
-      { label: "Texture sets", value: "TBC" },
-      { label: "Render time", value: "TBC" },
-      { label: "Duration", value: "TBC" },
-    ],
-    poster: "mug/poster.jpg",
-    posterAlt: "Ceramic mug render with clean subdivision topology",
-    model: "mug/mug.glb",
-    video: "",
-    breakdowns: [
-      {
-        label: "Wireframe",
-        image: "mug/wireframe.jpg",
-        alt: "Wireframe view of the mug's quad topology",
-      },
-      { label: "UV layout", image: "mug/uv.jpg", alt: "UV layout for the mug" },
-      { label: "Blockout", image: "mug/blockout.jpg", alt: "Grey blockout of the mug form" },
-    ],
-  },
-  {
-    slug: "red-velvet-chair",
+    slug: "lego-batman",
     index: "03",
-    title: "Red Velvet Chair",
-    titleLines: ["Red Velvet", "Chair"],
-    discipline: "Materials",
-    filters: ["environment"],
-    tags: ["Materials", "Hard surface"],
+    title: "Lego Batman",
+    titleLines: ["Lego", "Batman"],
+    discipline: "Character",
+    filters: ["character", "hard-surface"],
+    tags: ["Character", "Hard surface"],
     year: "2026",
-    blurb: "Sculpted upholstery with a procedural velvet shader and simulated seams.",
-    // TODO James: replace both paragraphs with your own write-up.
+    blurb: "The first original piece: a LEGO Batman minifigure, built from scratch.",
     body: [
-      "A materials-led study: the geometry exists to serve the shader. The upholstery was sculpted for large forms, then cloth-simulated for the settle, with seams driven by a separate low-res guide mesh.",
-      "The hardest problem was velvet's sheen falling apart at grazing angles. A layered shader, diffuse base plus a Fresnel-weighted sheen driven by the same procedural fibre noise: it held up under both studio and single-key lighting.",
+      "My first original 3D model. I am a big fan of the LEGO games, so LEGO Batman was what I wanted to make the moment I had enough Blender under my belt to attempt something of my own.",
+      "A minifigure looks simple and is not. Every form is hard-surface with exact proportions that people know by eye, so anything slightly off reads immediately as wrong even to someone who could not tell you why.",
     ],
-    tools: ["Blender 4.2", "Cycles", "Substance"],
+    tools: ["Blender", "Cycles"],
     specs: [
-      { label: "Tris", value: "TBC" },
-      { label: "Texture sets", value: "TBC" },
-      { label: "Render time", value: "TBC" },
-      { label: "Duration", value: "TBC" },
+      { label: "Software", value: "Blender" },
+      { label: "Subject", value: "LEGO Batman minifigure" },
+      { label: "Note", value: "First original piece" },
+      { label: "Published", value: "July 2026" },
     ],
-    poster: "red-velvet-chair/poster.jpg",
-    posterAlt: "Red velvet armchair render with procedural velvet shader",
-    model: "red-velvet-chair/chair.glb",
+    poster: "lego-batman/poster.jpg",
+    posterAlt: "Render of a LEGO Batman minifigure modelled in Blender",
+    model: "lego-batman/batman.glb",
     video: "",
+    artstation: "https://www.artstation.com/artwork/kw4GXK",
     breakdowns: [
       {
         label: "Wireframe",
-        image: "red-velvet-chair/wireframe.jpg",
-        alt: "Wireframe view of the chair",
-      },
-      { label: "UV layout", image: "red-velvet-chair/uv.jpg", alt: "UV layout for the chair" },
-      {
-        label: "Blockout",
-        image: "red-velvet-chair/blockout.jpg",
-        alt: "Grey blockout of the chair",
-      },
-    ],
-  },
-  {
-    slug: "biped-rig-test",
-    index: "04",
-    title: "Biped Rig Test",
-    titleLines: ["Biped", "Rig Test"],
-    discipline: "Rigging",
-    filters: ["character", "animation"],
-    tags: ["Rigging", "Animation"],
-    year: "2026",
-    blurb: "IK/FK switching, corrective shape keys, and a 40-frame walk to prove it.",
-    // TODO James: replace both paragraphs with your own write-up.
-    body: [
-      "A full biped control rig built to be handed to someone else. IK/FK switching on both limb chains, a space-switchable head and hands, and corrective shape keys firing off joint rotation rather than frame numbers.",
-      "The hardest problem was shoulder deformation through the full range of raise. Driven correctives on the deltoid, plus a helper bone rotating at half the clavicle's value, kept the volume without candy-wrapping.",
-    ],
-    tools: ["Blender 4.2", "Rigify", "Cycles"],
-    specs: [
-      { label: "Bones", value: "TBC" },
-      { label: "Controls", value: "TBC" },
-      { label: "Cycle length", value: "40 frames" },
-      { label: "Duration", value: "TBC" },
-    ],
-    poster: "biped-rig-test/poster.jpg",
-    posterAlt: "Biped character rig test render showing control shapes",
-    model: "biped-rig-test/rig.glb",
-    video: "biped-rig-test/walk-cycle.mp4",
-    breakdowns: [
-      {
-        label: "Wireframe",
-        image: "biped-rig-test/wireframe.jpg",
-        alt: "Wireframe of the biped mesh",
+        image: "lego-batman/wireframe.jpg",
+        alt: "Wireframe view of the LEGO Batman model",
       },
       {
         label: "UV layout",
-        image: "biped-rig-test/uv.jpg",
-        alt: "UV layout for the character",
+        image: "lego-batman/uv.jpg",
+        alt: "UV layout for the LEGO Batman model",
       },
       {
         label: "Blockout",
-        image: "biped-rig-test/blockout.jpg",
-        alt: "Rig control blockout",
+        image: "lego-batman/blockout.jpg",
+        alt: "Early grey blockout of the minifigure",
       },
     ],
   },
@@ -215,7 +195,7 @@ export const filters: { label: string; value: "all" | FilterTag }[] = [
   { label: "All", value: "all" },
   { label: "Character", value: "character" },
   { label: "Environment", value: "environment" },
-  { label: "Animation", value: "animation" },
+  { label: "Hard surface", value: "hard-surface" },
 ];
 
 export function getProject(slug: string): Project | undefined {

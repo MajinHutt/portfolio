@@ -1,5 +1,5 @@
 import { site } from "@/lib/site";
-import { CvLink } from "@/components/CvLink";
+import { projects } from "@/lib/projects";
 import { ProtectedEmail } from "@/components/human/ProtectedEmail";
 
 /**
@@ -11,20 +11,9 @@ export function SiteFooter() {
   return (
     <footer className="bg-panel text-fg">
       <div className="mx-auto max-w-page">
-        <div className="grid grid-cols-1 border-b border-on-dark-rule min-[600px]:grid-cols-3">
-          <div className="border-b border-on-dark-rule p-10 min-[600px]:border-b-0 min-[600px]:border-r">
-            <p className="t-eyebrow mb-4 text-[rgba(243,242,242,0.7)]">
-              Available for
-            </p>
-            <p className="text-[24px] font-extrabold leading-[1.2] tracking-h3">
-              {site.availableFor.map((line) => (
-                <span key={line} className="block">
-                  {line}
-                </span>
-              ))}
-            </p>
-          </div>
-
+        {/* Two cells now: the availability statement and the CV button were both
+            removed at the client's request. The CV lives in the nav bar only. */}
+        <div className="grid grid-cols-1 border-b border-on-dark-rule min-[600px]:grid-cols-2">
           <div className="border-b border-on-dark-rule p-10 min-[600px]:border-b-0 min-[600px]:border-r">
             <p className="t-eyebrow mb-4 text-[rgba(243,242,242,0.7)]">Contact</p>
             <ul className="flex flex-col gap-2">
@@ -50,11 +39,11 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          <div className="flex flex-col justify-end p-10">
-            <CvLink
-              label="Curriculum vitae"
-              className="t-button inline-flex w-fit items-center border-2 border-divider bg-accent px-[18px] py-3 text-white no-underline transition-colors duration-[140ms] ease-out hover:bg-accent-700"
-            />
+          <div className="p-10">
+            <p className="t-eyebrow mb-4 text-[rgba(243,242,242,0.7)]">Portfolio</p>
+            <p className="text-[24px] font-extrabold leading-[1.2] tracking-h3">
+              {projects.length} pieces, all modelled in Blender
+            </p>
           </div>
         </div>
 

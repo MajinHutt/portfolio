@@ -2,7 +2,6 @@ import Link from "next/link";
 import { ProjectViewer } from "@/components/viewer/ProjectViewer";
 import { heroProject, projects } from "@/lib/projects";
 import { site } from "@/lib/site";
-import { CvLink } from "@/components/CvLink";
 
 const HERO_LINES = ["Modelling", "things that", "hold up", "in motion."];
 
@@ -28,13 +27,13 @@ export function Hero() {
 
           {/* Mobile flag: flush top-left of the plate. */}
           <span className="pointer-events-none absolute left-0 top-0 z-10 bg-accent px-3 py-[6px] text-[11px] font-extrabold uppercase tracking-flag text-white min-[900px]:hidden">
-            Selected work &middot; 2024&ndash;2026
+            Selected work
           </span>
 
           {/* Desktop overlay: flag + H1, bottom-left, over the render. */}
           <div className="pointer-events-none absolute inset-0 hidden flex-col justify-end p-10 min-[900px]:flex">
             <span className="mb-4 w-fit bg-accent px-3 py-[6px] text-[11px] font-extrabold uppercase tracking-flag text-white">
-              Selected work &middot; 2024&ndash;2026
+              Selected work
             </span>
             <h1 className="t-hero text-fg [text-shadow:0_2px_40px_rgba(0,0,0,0.55)]">
               {HERO_LINES.map((line) => (
@@ -62,14 +61,13 @@ export function Hero() {
               {site.tagline}
             </p>
 
-            <div className="flex flex-col gap-2 min-[600px]:flex-row">
+            <div className="flex">
               <Link
                 href="/#portfolio"
                 className="t-button inline-flex items-center justify-center whitespace-nowrap border-2 border-divider bg-accent px-[18px] py-[13px] text-white no-underline transition-colors duration-[140ms] ease-out hover:bg-accent-700 min-[600px]:justify-start min-[600px]:py-3"
               >
                 Browse portfolio &rarr;
               </Link>
-              <CvLink label="Curriculum vitae" className="t-button inline-flex items-center justify-center whitespace-nowrap border-2 border-divider px-[18px] py-[13px] text-fg no-underline transition-colors duration-[140ms] ease-out hover:bg-[rgba(247,246,245,0.1)] min-[600px]:justify-start min-[600px]:py-[10px]" />
             </div>
           </div>
 
