@@ -104,14 +104,12 @@ export const projects: Project[] = [
       "Working stylised does not mean working loosely. With this few polygons every edge is load-bearing, because there is no texture detail to fall back on and the silhouette has to carry the whole read.",
     ],
     tools: ["Blender", "Cycles"],
-    // TODO: island.glb uploaded as a 1-byte file, so there are no real numbers
-    // to quote yet. Once it is re-exported and pushed, run `npm run model-stats`
-    // and replace these with the triangle, material and texture counts, to
-    // match the other two projects.
+    // Read straight out of the published .glb: run `npm run model-stats`.
     specs: [
-      { label: "Software", value: "Blender" },
-      { label: "Style", value: "Low poly" },
-      { label: "Subject", value: "Island and rowboat" },
+      { label: "Triangles", value: "137,141" },
+      { label: "Materials", value: "5" },
+      { label: "Textures", value: "1" },
+      { label: "Model size", value: "313 KB" },
       { label: "Published", value: "July 2026" },
     ],
     poster: "https://cdna.artstation.com/p/assets/images/images/100/998/966/large/james-hutt-ocean-island.jpg?1784743820",
