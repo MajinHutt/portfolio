@@ -1,0 +1,38 @@
+# Line-ending handling.
+#
+# Without this, Git guesses whether a file is text and "helpfully" rewrites its
+# line endings on checkout. For a binary that is corruption: a PDF or a .glb
+# cloned onto a Windows machine comes out with CRLF injected through the middle
+# of it and no longer opens.
+#
+# Text files are normalised to LF in the repository and checked out natively.
+* text=auto
+
+# Never touch these.
+*.pdf binary
+*.glb binary
+*.gltf binary
+*.fbx binary
+*.blend binary
+*.wasm binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.webp binary
+*.avif binary
+*.gif binary
+*.ico binary
+*.mp4 binary
+*.mov binary
+*.webm binary
+*.exr binary
+*.hdr binary
+*.psd binary
+
+# Shell scripts must keep LF even on Windows, or the hook will not run.
+.githooks/* text eol=lf
+*.sh text eol=lf
