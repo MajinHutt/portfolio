@@ -14,13 +14,6 @@ if (assetBase) {
   }
 }
 
-// James's own images on ArtStation's CDN, used as interim posters until the
-// files are hosted on our own CDN. See the note at the top of lib/projects.ts.
-remotePatterns.push(
-  { protocol: "https", hostname: "cdna.artstation.com" },
-  { protocol: "https", hostname: "cdnb.artstation.com" },
-);
-
 const nextConfig = {
   images: {
     remotePatterns,

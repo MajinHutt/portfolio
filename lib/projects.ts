@@ -13,12 +13,11 @@
  * Copy is adapted from James's own ArtStation write-ups:
  *   https://www.artstation.com/james_hutt
  *
- * INTERIM POSTERS: the `poster` fields currently point at James's own images on
- * ArtStation's CDN, so the grid shows real work rather than empty plates. They
- * are his images, but they are served from someone else's bandwidth and the
- * URLs can change without warning. Replace each one with a path on our own CDN
- * (for example "red-velvet-chair/poster.jpg") as soon as the files are
- * uploaded. See docs/ASSET-HOSTING.md.
+ * Posters are the same renders published on ArtStation, so each piece keeps the
+ * composition and camera angle James chose for it, but they are served from our
+ * own CDN rather than hotlinked from ArtStation. If he ever has the original
+ * full-resolution renders, they drop straight in over these files: same
+ * filenames, no code change.
  *
  * There is no separate wireframe or blockout still to supply: the viewer's own
  * Shaded / Wireframe / Clay modes show the topology live, on the real mesh,
@@ -81,7 +80,7 @@ export const projects: Project[] = [
       { label: "Model size", value: "3.2 MB" },
       { label: "Published", value: "August 2026" },
     ],
-    poster: "https://cdna.artstation.com/p/assets/images/images/101/292/820/large/james-hutt-chair-3.jpg?1785749895",
+    poster: "red-velvet-chair/poster.jpg",
     posterAlt:
       "Render of a red velvet dining chair, modelled and lit in Blender",
     model: "red-velvet-chair/chair.glb",
@@ -118,7 +117,7 @@ export const projects: Project[] = [
       { label: "Model size", value: "164 KB" },
       { label: "Published", value: "July 2026" },
     ],
-    poster: "https://cdna.artstation.com/p/assets/images/images/100/998/966/large/james-hutt-ocean-island.jpg?1784743820",
+    poster: "low-poly-island/poster.jpg",
     posterAlt:
       "Low poly render of a small island at sea with a rowboat on the shore",
     model: "low-poly-island/island.glb",
@@ -148,7 +147,7 @@ export const projects: Project[] = [
       { label: "Model size", value: "4.9 MB" },
       { label: "Published", value: "July 2026" },
     ],
-    poster: "https://cdnb.artstation.com/p/assets/images/images/100/653/549/large/james-hutt-lego-batman.jpg?1783602265",
+    poster: "lego-batman/poster.jpg",
     posterAlt: "Render of a LEGO Batman minifigure modelled in Blender",
     model: "lego-batman/batman.glb",
     video: "",
