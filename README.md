@@ -34,7 +34,8 @@ npm run install-hooks
 | Document | Read it when |
 | --- | --- |
 | [Deployment](docs/DEPLOYMENT.md) | Getting the site live on James's GitHub and Vercel |
-| [How to add a project](docs/HOW-TO-ADD-PROJECT.md) | Adding a new piece. **The one you will use most.** |
+| [Uploading models](docs/UPLOADING-MODELS.md) | **Start here.** Getting the three .glb files live, step by step. |
+| [How to add a project](docs/HOW-TO-ADD-PROJECT.md) | Adding a new piece later on. |
 | [Blender export](docs/BLENDER-EXPORT.md) | Exporting a `.glb` that is small enough to serve |
 | [Asset hosting](docs/ASSET-HOSTING.md) | Setting up or changing where models and renders live |
 | [Cost controls](docs/COST-CONTROLS.md) | Understanding why this cannot generate a bill |
