@@ -70,12 +70,14 @@
 
 @layer components {
   /* Text roles from the handoff's typography table. */
+  /* Sentence case, not uppercase: the headline is written in James's own
+     voice, and 84px of shouting works against a friendly, open tone. Size and
+     weight are unchanged, so it still carries the page. */
   .t-hero {
     font-size: 84px;
     font-weight: 900;
     letter-spacing: -0.035em;
     line-height: 0.92;
-    text-transform: uppercase;
   }
   .t-detail-h1 {
     font-size: 46px;

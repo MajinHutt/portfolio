@@ -12,6 +12,18 @@
  *
  * Copy is adapted from James's own ArtStation write-ups:
  *   https://www.artstation.com/james_hutt
+ *
+ * INTERIM POSTERS: the `poster` fields currently point at James's own images on
+ * ArtStation's CDN, so the grid shows real work rather than empty plates. They
+ * are his images, but they are served from someone else's bandwidth and the
+ * URLs can change without warning. Replace each one with a path on our own CDN
+ * (for example "red-velvet-chair/poster.jpg") as soon as the files are
+ * uploaded. See docs/ASSET-HOSTING.md.
+ *
+ * The breakdown stills are deliberately NOT filled with the alternate renders
+ * from ArtStation. That strip is meant to show wireframes, UVs and blockouts:
+ * the proof behind the render. Putting more beauty shots there would defeat
+ * the point of having it.
  */
 
 export type Discipline = "Materials" | "Environment" | "Character";
@@ -75,7 +87,7 @@ export const projects: Project[] = [
       { label: "Reference", value: "Modelled from life" },
       { label: "Published", value: "August 2026" },
     ],
-    poster: "red-velvet-chair/poster.jpg",
+    poster: "https://cdna.artstation.com/p/assets/images/images/101/292/820/large/james-hutt-chair-3.jpg?1785749895",
     posterAlt:
       "Render of a red velvet dining chair, modelled and lit in Blender",
     model: "red-velvet-chair/chair.glb",
@@ -121,7 +133,7 @@ export const projects: Project[] = [
       { label: "Subject", value: "Island and rowboat" },
       { label: "Published", value: "July 2026" },
     ],
-    poster: "low-poly-island/poster.jpg",
+    poster: "https://cdna.artstation.com/p/assets/images/images/100/998/966/large/james-hutt-ocean-island.jpg?1784743820",
     posterAlt:
       "Low poly render of a small island at sea with a rowboat on the shore",
     model: "low-poly-island/island.glb",
@@ -166,7 +178,7 @@ export const projects: Project[] = [
       { label: "Note", value: "First original piece" },
       { label: "Published", value: "July 2026" },
     ],
-    poster: "lego-batman/poster.jpg",
+    poster: "https://cdnb.artstation.com/p/assets/images/images/100/653/549/large/james-hutt-lego-batman.jpg?1783602265",
     posterAlt: "Render of a LEGO Batman minifigure modelled in Blender",
     model: "lego-batman/batman.glb",
     video: "",
