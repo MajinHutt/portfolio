@@ -106,20 +106,16 @@ export const projects: Project[] = [
     tools: ["Blender", "Cycles"],
     // Read straight out of the published .glb: run `npm run model-stats`.
     //
-    // These describe the island, boat, rocks and trees only. The ocean is a
-    // separate subdivided plane with its own `sea` material and no geometry
-    // shared with anything else, and at 131,072 triangles it would otherwise
-    // swamp the numbers for the part of the scene that was actually modelled.
-    // Hence the label: this is the island's geometry, not the file's total.
-    //
-    // James is re-exporting the ocean as low poly. Once it lands, re-run
-    // `npm run model-stats` and consider quoting the whole file again, which
-    // will be the cleaner thing to do if the totals are no longer distorted.
+    // This is the whole file, ocean included. It was not always: the first
+    // export carried a 131,072-triangle subdivided ocean plane that made a
+    // genuinely low poly island look like anything but. Rebuilt at 1,352, the
+    // scene is now honestly described by its own total, which is the better
+    // thing to publish.
     specs: [
-      { label: "Island geometry", value: "6,069 tris" },
-      { label: "Meshes", value: "4" },
-      { label: "Materials", value: "4" },
-      { label: "Model size", value: "313 KB" },
+      { label: "Triangles", value: "7,421" },
+      { label: "Meshes", value: "5" },
+      { label: "Materials", value: "5" },
+      { label: "Model size", value: "164 KB" },
       { label: "Published", value: "July 2026" },
     ],
     poster: "https://cdna.artstation.com/p/assets/images/images/100/998/966/large/james-hutt-ocean-island.jpg?1784743820",
