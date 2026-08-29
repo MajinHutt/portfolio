@@ -8,6 +8,7 @@ import {
   Environment,
   Lightformer,
   OrbitControls,
+  useAnimations,
   useGLTF,
   useProgress,
 } from "@react-three/drei";
@@ -56,8 +57,12 @@ const WIREFRAME_MATERIAL = new THREE.MeshBasicMaterial({
 });
 
 const CLAY_MATERIAL = new THREE.MeshStandardMaterial({
-  color: "#d7d3d3",
-  roughness: 0.85,
+  // A true mid grey, not the near-white this started as. Under the studio
+  // environment a light albedo clipped to flat white and lost the shading
+  // gradation across curved surfaces, which is the entire point of a clay
+  // pass. Darker albedo gives the falloff somewhere to happen.
+  color: "#a8a29e",
+  roughness: 0.9,
   metalness: 0,
 });
 
@@ -100,7 +105,29 @@ function DisplayMode({
 }
 
 function LoadedModel({ url }: { url: string }) {
-  const { scene } = useGLTF(url, "/draco/");
+  const group = useRef<THREE.Group>(null);
+  const { scene, animations } = useGLTF(url, "/draco/");
+
+  // Any clips exported with the model play on a loop. The island's boat rocks
+  // on the water this way, which is the sort of thing a still render cannot
+  // show and is half the reason for having a live viewer at all.
+  const { actions } = useAnimations(animations, group);
+
+  useEffect(() => {
+    if (!animations.length) return;
+
+    // A model that moves on its own is exactly what reduced motion is asking
+    // about, so it stays on its first frame instead.
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return;
+
+    const playing = Object.values(actions).filter(Boolean);
+    playing.forEach((action) => {
+      action!.reset().setLoop(THREE.LoopRepeat, Infinity).play();
+    });
+
+    return () => playing.forEach((action) => action!.stop());
+  }, [actions, animations]);
 
   // Enable shadow casting on the author's geometry.
   useLayoutEffect(() => {
@@ -112,7 +139,11 @@ function LoadedModel({ url }: { url: string }) {
     });
   }, [scene]);
 
-  return <primitive object={scene} />;
+  return (
+    <group ref={group}>
+      <primitive object={scene} />
+    </group>
+  );
 }
 
 /**
@@ -291,9 +322,10 @@ export default function ModelStage({
 
       <Controls interacted={interacted} allowZoom={allowZoom} />
 
-      {/* Wireframe mode is a technical read, not a presentation one: the grade
-          would only sit between the viewer and the topology, so it is skipped. */}
-      {CINEMATIC && mode !== "wireframe" && (
+      {/* Shaded only. Wireframe and clay are technical reads, and the grade
+          would sit between the viewer and the thing being read: bloom on a
+          light clay surface washes out exactly the shading that shows form. */}
+      {CINEMATIC && mode === "shaded" && (
         <EffectComposer enableNormalPass={false} multisampling={0}>
           <Bloom
             // Only true highlights lift. At 0.9 a mid-grey surface contributes
