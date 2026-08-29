@@ -33,6 +33,18 @@ export const site = {
     },
   ],
   cvPath: "/james-hutt-cv.pdf",
+  /**
+   * The three words that carry the hero, one per line, set large.
+   */
+  heroWords: ["Model.", "Learn.", "Repeat."],
+  /**
+   * The smaller line underneath them. James's own words, with two punctuation
+   * fixes: a comma splice became a semicolon, and a stray comma before "how"
+   * was removed.
+   */
+  heroSub:
+    "Learning to model the intricate details that really create an experience, including the parts you don't see in the render. I learned how bodies move; now I want to learn from others how to create amazing animations.",
+
   /** Art and look-development tools: what the work is made in. */
   toolset: [
     "Blender",

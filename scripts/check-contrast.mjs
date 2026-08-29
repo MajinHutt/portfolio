@@ -98,6 +98,7 @@ const PAIRS = [
 
   // ── Render plates ────────────────────────────────────────────────────────
   ["Hero H1 on plate", C.fg, C.stage, "large", "84px/900"],
+  ["Hero sub-line on plate", C.fg, C.stage, "normal", "15px over the render"],
   ["Viewer hint on plate", C.fgMuted, C.stage, "normal", "11px"],
   ["Plate fill vs page", C.stage, C.bg, "info", "bounded by 2px rule; see docs"],
 

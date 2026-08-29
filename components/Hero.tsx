@@ -3,8 +3,6 @@ import { ProjectViewer } from "@/components/viewer/ProjectViewer";
 import { heroProject, projects } from "@/lib/projects";
 import { site } from "@/lib/site";
 
-const HERO_LINES = ["Modelling", "things that", "hold up", "in motion."];
-
 /**
  * Desktop: a `1fr 420px` split: live 3D on the left plate, support column right.
  * Mobile: the plate stacks on top at 420px, the red flag moves to the plate's
@@ -36,12 +34,19 @@ export function Hero() {
               Selected work
             </span>
             <h1 className="t-hero text-fg [text-shadow:0_2px_40px_rgba(0,0,0,0.55)]">
-              {HERO_LINES.map((line) => (
-                <span key={line} className="block">
-                  {line}
+              {site.heroWords.map((word) => (
+                <span key={word} className="block">
+                  {word}
                 </span>
               ))}
             </h1>
+
+            {/* Deliberately much smaller than the three words above it: the
+                headline is the statement, this is the footnote that explains
+                it. Width is capped so it never runs the full plate. */}
+            <p className="mt-5 max-w-[54ch] text-[15px] leading-[1.55] text-fg [text-shadow:0_2px_24px_rgba(0,0,0,0.75)] min-[1200px]:text-[16px]">
+              {site.heroSub}
+            </p>
           </div>
         </div>
 
@@ -49,17 +54,22 @@ export function Hero() {
         <div className="flex flex-col min-[900px]:border-l-2 min-[900px]:border-divider">
           <div className="border-b-2 border-divider px-4 pb-7 pt-6 min-[900px]:px-8 min-[900px]:pb-7 min-[900px]:pt-8">
             {/* Mobile H1 lives on the light ground, not over the render. */}
-            <h1 className="t-hero mb-4 text-fg min-[900px]:hidden">
-              {HERO_LINES.map((line) => (
-                <span key={line} className="block">
-                  {line}
-                </span>
-              ))}
-            </h1>
+            {/* Mobile: the words and their footnote sit on the solid ground
+                rather than over the render, where the smaller line would be
+                hard to read. Hidden on desktop, where the overlay carries it. */}
+            <div className="min-[900px]:hidden">
+              <h1 className="t-hero mb-4 text-fg">
+                {site.heroWords.map((word) => (
+                  <span key={word} className="block">
+                    {word}
+                  </span>
+                ))}
+              </h1>
 
-            <p className="mb-6 text-[16px] leading-[1.5] text-fg min-[900px]:text-[17px]">
-              {site.tagline}
-            </p>
+              <p className="mb-6 text-[15px] leading-[1.55] text-fg">
+                {site.heroSub}
+              </p>
+            </div>
 
             <div className="flex">
               <Link
