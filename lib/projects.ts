@@ -73,10 +73,12 @@ export const projects: Project[] = [
       "Most of the work went into materials and lighting rather than silhouette. Those are the parts that decide whether a familiar object reads as real or as a model of itself, and a chair everyone has seen a hundred times gives you nowhere to hide.",
     ],
     tools: ["Blender", "Cycles"],
+    // Read straight out of the published .glb: run `npm run model-stats`.
     specs: [
-      { label: "Software", value: "Blender" },
-      { label: "Focus", value: "Materials and lighting" },
-      { label: "Reference", value: "Modelled from life" },
+      { label: "Triangles", value: "20,576" },
+      { label: "Materials", value: "2" },
+      { label: "Textures", value: "1 × 2K" },
+      { label: "Model size", value: "3.2 MB" },
       { label: "Published", value: "August 2026" },
     ],
     poster: "https://cdna.artstation.com/p/assets/images/images/101/292/820/large/james-hutt-chair-3.jpg?1785749895",
@@ -102,6 +104,10 @@ export const projects: Project[] = [
       "Working stylised does not mean working loosely. With this few polygons every edge is load-bearing, because there is no texture detail to fall back on and the silhouette has to carry the whole read.",
     ],
     tools: ["Blender", "Cycles"],
+    // TODO: island.glb uploaded as a 1-byte file, so there are no real numbers
+    // to quote yet. Once it is re-exported and pushed, run `npm run model-stats`
+    // and replace these with the triangle, material and texture counts, to
+    // match the other two projects.
     specs: [
       { label: "Software", value: "Blender" },
       { label: "Style", value: "Low poly" },
@@ -130,10 +136,12 @@ export const projects: Project[] = [
       "A minifigure looks simple and is not. Every form is hard-surface with exact proportions that people know by eye, so anything slightly off reads immediately as wrong even to someone who could not tell you why.",
     ],
     tools: ["Blender", "Cycles"],
+    // Read straight out of the published .glb: run `npm run model-stats`.
     specs: [
-      { label: "Software", value: "Blender" },
-      { label: "Subject", value: "LEGO Batman minifigure" },
-      { label: "Note", value: "First original piece" },
+      { label: "Triangles", value: "145,386" },
+      { label: "Materials", value: "8" },
+      { label: "Textures", value: "4, up to 1K" },
+      { label: "Model size", value: "4.9 MB" },
       { label: "Published", value: "July 2026" },
     ],
     poster: "https://cdnb.artstation.com/p/assets/images/images/100/653/549/large/james-hutt-lego-batman.jpg?1783602265",

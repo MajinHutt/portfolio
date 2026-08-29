@@ -66,10 +66,11 @@ above the array.
   ],
   tools: ["Blender 4.2", "Cycles", "Substance"],
   specs: [
-    { label: "Tris", value: "96,400" },
-    { label: "Texture sets", value: "2 × 2K" },
-    { label: "Render time", value: "2m 30s / frame" },
-    { label: "Duration", value: "2 weeks" },
+    { label: "Triangles", value: "96,400" },
+    { label: "Materials", value: "3" },
+    { label: "Textures", value: "2 × 2K" },
+    { label: "Model size", value: "2.8 MB" },
+    { label: "Published", value: "August 2026" },
   ],
   poster: "red-velvet-chair/poster.jpg",
   posterAlt: "Describe the image for someone who cannot see it",
@@ -81,6 +82,22 @@ above the array.
 Everything updates on its own from that one entry: the homepage grid, the index
 list, the filter chips, the project page, the "Next" button, the sitemap, and
 the Open Graph preview when someone shares the link.
+
+### Getting the real numbers
+
+Do not guess the spec values. Once the model is on the CDN, read them out of
+the file itself:
+
+```bash
+npm run model-stats
+```
+
+It prints the triangle count, material count, texture resolutions and file size
+for every published model, straight from the `.glb` a visitor actually
+downloads. Paste them into `specs`.
+
+Other modellers are the harshest readers of this site, and a wrong triangle
+count is worse than none.
 
 ## Step 4: check and push
 

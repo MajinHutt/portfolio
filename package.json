@@ -13,7 +13,8 @@
     "check-uploads": "node scripts/check-uploads.mjs",
     "check-contrast": "node scripts/check-contrast.mjs",
     "check-url": "node scripts/check-url.mjs",
-    "build-favicon": "python scripts/build-favicon.py"
+    "build-favicon": "python scripts/build-favicon.py",
+    "model-stats": "python scripts/model-stats.py"
   },
   "dependencies": {
     "@react-three/drei": "^9.114.3",
