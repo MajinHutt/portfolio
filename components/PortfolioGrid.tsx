@@ -26,6 +26,8 @@ export function PortfolioGrid() {
       ? projects
       : projects.filter((p) => p.filters.includes(active));
 
+  const [feature, ...rest] = visible;
+
   // ── Scroll-triggered reveal ───────────────────────────────────────────────
   useLayoutEffect(() => {
     const root = rootRef.current;
@@ -131,70 +133,138 @@ export function PortfolioGrid() {
           </div>
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 border-t-2 border-divider min-[900px]:grid-cols-2">
-          {visible.map((project, i) => (
-            <article
-              key={project.slug}
-              data-card
-              className={`group border-b-2 border-divider transition-colors duration-[140ms] ease-out hover:bg-surface ${
-                i % 2 === 0 ? "min-[900px]:border-r-2" : ""
-              }`}
-            >
-              <Link
-                href={`/work/${project.slug}`}
-                className="block no-underline"
+        {/*
+          Three projects will not sit in a two-column grid: the fourth cell is
+          left empty and the eye reads it as something missing. So the first
+          project runs full width as the focus piece, and the rest pair off
+          underneath. It also earns its keep editorially, because the lead
+          piece is the one worth looking at first.
+
+          The layout holds under filtering, which is where a fixed
+          "1 big + 2 small" arrangement would fall over: whatever is left after
+          a filter, the first item leads and the remainder pair up, with a
+          single remaining item running full width rather than stranding a gap.
+        */}
+        {feature && (
+          <article
+            data-card
+            className="group border-t-2 border-divider transition-colors duration-[140ms] ease-out hover:bg-surface"
+          >
+            <Link href={`/work/${feature.slug}`} className="block no-underline">
+              <div className="relative overflow-hidden">
+                <Plate
+                  src={feature.poster}
+                  alt={feature.posterAlt}
+                  priority
+                  sizes="100vw"
+                  className="h-[300px] min-[900px]:h-[440px] min-[1200px]:h-[520px]"
+                  imageClassName="transition-transform duration-[600ms] ease-out group-hover:scale-[1.03] motion-reduce:transform-none motion-reduce:transition-none"
+                />
+
+                <span className="absolute left-0 top-0 z-10 bg-accent px-3 py-[6px] text-[11px] font-extrabold uppercase tracking-eyebrow text-white">
+                  {feature.index}
+                </span>
+
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute bottom-0 right-0 z-10 translate-y-full bg-panel px-3 py-[6px] text-[11px] font-extrabold uppercase tracking-eyebrow text-fg transition-transform duration-300 ease-out group-hover:translate-y-0 motion-reduce:transition-none"
+                >
+                  View project &rarr;
+                </span>
+              </div>
+
+              <div className="flex flex-col gap-3 p-4 min-[900px]:flex-row min-[900px]:items-end min-[900px]:justify-between min-[900px]:gap-10 min-[900px]:px-10 min-[900px]:pb-7 min-[900px]:pt-6">
+                <div className="min-[900px]:max-w-[62ch]">
+                  <h3 className="t-h2 mb-2 text-fg">{feature.title}</h3>
+                  <p className="text-[15px] leading-[1.55] text-fg-muted min-[900px]:text-[17px]">
+                    {feature.blurb}
+                  </p>
+                </div>
+                <div className="flex shrink-0 flex-row flex-wrap gap-[6px]">
+                  {feature.tags.map((tag, ti) => (
+                    <span
+                      key={tag}
+                      className={`t-tag w-fit px-2 py-1 ${
+                        ti === 0
+                          ? "bg-accent-200 text-accent-800"
+                          : "bg-neutral-200 text-neutral-800"
+                      }`}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </Link>
+          </article>
+        )}
+
+        {rest.length > 0 && (
+          <div
+            className={`grid grid-cols-1 border-t-2 border-divider ${
+              rest.length > 1 ? "min-[900px]:grid-cols-2" : ""
+            }`}
+          >
+            {rest.map((project, i) => (
+              <article
+                key={project.slug}
+                data-card
+                className={`group border-b-2 border-divider transition-colors duration-[140ms] ease-out hover:bg-surface ${
+                  rest.length > 1 && i % 2 === 0 ? "min-[900px]:border-r-2" : ""
+                }`}
               >
-                <div className="relative overflow-hidden">
-                  <Plate
-                    src={project.poster}
-                    alt={project.posterAlt}
-                    sizes="(max-width: 899px) 100vw, 50vw"
-                    className="h-[260px] min-[900px]:h-[300px] min-[1200px]:h-[380px]"
-                    imageClassName="transition-transform duration-[600ms] ease-out group-hover:scale-[1.04] motion-reduce:transform-none motion-reduce:transition-none"
-                  />
+                <Link
+                  href={`/work/${project.slug}`}
+                  className="block no-underline"
+                >
+                  <div className="relative overflow-hidden">
+                    <Plate
+                      src={project.poster}
+                      alt={project.posterAlt}
+                      sizes="(max-width: 899px) 100vw, 50vw"
+                      className="h-[260px] min-[900px]:h-[300px] min-[1200px]:h-[340px]"
+                      imageClassName="transition-transform duration-[600ms] ease-out group-hover:scale-[1.04] motion-reduce:transform-none motion-reduce:transition-none"
+                    />
 
-                  {/* Index badge, flush into the plate's corner, no offset. */}
-                  <span className="absolute left-0 top-0 z-10 bg-accent px-3 py-[6px] text-[11px] font-extrabold uppercase tracking-eyebrow text-white">
-                    {project.index}
-                  </span>
+                    <span className="absolute left-0 top-0 z-10 bg-accent px-3 py-[6px] text-[11px] font-extrabold uppercase tracking-eyebrow text-white">
+                      {project.index}
+                    </span>
 
-                  {/* Hover affordance: slides up from the plate's bottom edge. */}
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute bottom-0 right-0 z-10 translate-y-full bg-panel px-3 py-[6px] text-[11px] font-extrabold uppercase tracking-eyebrow text-fg transition-transform duration-300 ease-out group-hover:translate-y-0 motion-reduce:transition-none"
-                  >
-                    View project &rarr;
-                  </span>
-                </div>
-
-                <div className="flex flex-col gap-3 p-4 min-[900px]:flex-row min-[900px]:justify-between min-[900px]:gap-6 min-[900px]:px-6 min-[900px]:pb-[22px] min-[900px]:pt-5">
-                  <div>
-                    <h3 className="t-h3 mb-1 text-fg">{project.title}</h3>
-                    <p className="text-[14px] leading-[1.55] text-fg-muted">
-                      {project.blurb}
-                    </p>
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute bottom-0 right-0 z-10 translate-y-full bg-panel px-3 py-[6px] text-[11px] font-extrabold uppercase tracking-eyebrow text-fg transition-transform duration-300 ease-out group-hover:translate-y-0 motion-reduce:transition-none"
+                    >
+                      View project &rarr;
+                    </span>
                   </div>
-                  {/* Tags sit right on desktop, on their own row on mobile. */}
-                  <div className="flex shrink-0 flex-row flex-wrap gap-[6px] min-[900px]:flex-col">
-                    {project.tags.map((tag, ti) => (
-                      <span
-                        key={tag}
-                        className={`t-tag w-fit px-2 py-1 ${
-                          ti === 0
-                            ? "bg-accent-200 text-accent-800"
-                            : "bg-neutral-200 text-neutral-800"
-                        }`}
-                      >
-                        {tag}
-                      </span>
-                    ))}
+
+                  <div className="flex flex-col gap-3 p-4 min-[900px]:flex-row min-[900px]:justify-between min-[900px]:gap-6 min-[900px]:px-6 min-[900px]:pb-[22px] min-[900px]:pt-5">
+                    <div>
+                      <h3 className="t-h3 mb-1 text-fg">{project.title}</h3>
+                      <p className="text-[14px] leading-[1.55] text-fg-muted">
+                        {project.blurb}
+                      </p>
+                    </div>
+                    <div className="flex shrink-0 flex-row flex-wrap gap-[6px] min-[900px]:flex-col">
+                      {project.tags.map((tag, ti) => (
+                        <span
+                          key={tag}
+                          className={`t-tag w-fit px-2 py-1 ${
+                            ti === 0
+                              ? "bg-accent-200 text-accent-800"
+                              : "bg-neutral-200 text-neutral-800"
+                          }`}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              </Link>
-            </article>
-          ))}
-        </div>
+                </Link>
+              </article>
+            ))}
+          </div>
+        )}
 
         {visible.length === 0 && (
           <p className="px-4 py-10 text-[15px] text-fg-muted min-[900px]:px-10">

@@ -14,10 +14,10 @@ Follow `docs/BLENDER-EXPORT.md`. You want five files:
 ```
 poster.jpg       the main render (landscape, roughly 3:2)
 model.glb        Draco-compressed
-wireframe.jpg    topology
-uv.jpg           UV layout
-blockout.jpg     early grey stage
 ```
+
+Two files. The viewer shows wireframe and clay itself, so there is nothing else
+to export.
 
 Plus optionally `walk-cycle.mp4` or similar if the piece is an animation.
 
@@ -78,11 +78,6 @@ above the array.
   posterAlt: "Describe the image for someone who cannot see it",
   model: "red-velvet-chair/chair.glb",
   video: "",
-  breakdowns: [
-    { label: "Wireframe", image: "red-velvet-chair/wireframe.jpg", alt: "..." },
-    { label: "UV layout", image: "red-velvet-chair/uv.jpg", alt: "..." },
-    { label: "Blockout", image: "red-velvet-chair/blockout.jpg", alt: "..." },
-  ],
 },
 ```
 

@@ -105,6 +105,6 @@ Not yet done:
 
 - No screen-reader testing on real hardware (NVDA/VoiceOver). Worth doing once
   the site is live.
-- The viewer has no keyboard-driven orbit. Users who can't drag get the poster
-  render and the breakdown stills, which is an acceptable fallback, but a
-  keyboard control would be better.
+- The viewer has no keyboard-driven orbit. Users who cannot drag get the poster
+  render, which is an acceptable fallback, but a keyboard control would be
+  better. This matters slightly more now the breakdown stills have gone.

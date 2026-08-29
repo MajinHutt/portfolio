@@ -25,6 +25,8 @@ export function ProjectViewer({
   /** Off for the hero, so the wheel scrolls the page instead of zooming. */
   allowZoom = true,
   className = "",
+  /** Applied to the outer wrapper, so a caller can make the stage fill a column. */
+  wrapperClassName = "",
 }: {
   modelPath: string;
   poster: string;
@@ -32,6 +34,7 @@ export function ProjectViewer({
   controls?: boolean;
   allowZoom?: boolean;
   className?: string;
+  wrapperClassName?: string;
 }) {
   const [mode, setMode] = useState<ViewerMode>("shaded");
   const [nearViewport, setNearViewport] = useState(false);
@@ -94,7 +97,7 @@ export function ProjectViewer({
     VIEWER_MODES.find((m) => m.value === mode)?.label ?? "Shaded";
 
   return (
-    <div>
+    <div className={wrapperClassName}>
       <div ref={containerRef} className={`relative bg-stage ${className}`}>
         {/* Poster sits underneath as the pre-load state. Plain <img> because it
             is a decorative under-layer that must paint immediately. */}

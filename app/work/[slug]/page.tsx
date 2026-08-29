@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProjectViewer } from "@/components/viewer/ProjectViewer";
-import { BreakdownStrip } from "@/components/project/BreakdownStrip";
 import { ProjectVideo } from "@/components/project/ProjectVideo";
 import { asset } from "@/lib/assets";
 import { getNextProject, getProject, projects } from "@/lib/projects";
@@ -72,13 +71,18 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
 
       {/* ── Main split ──────────────────────────────────────────────────── */}
       <div className="mx-auto grid max-w-page grid-cols-1 border-b-2 border-divider min-[900px]:grid-cols-[1fr_340px] min-[1200px]:grid-cols-[1fr_400px]">
-        {/* Left: the viewer stays dominant. */}
-        <div className="min-[900px]:border-r-2 min-[900px]:border-divider">
+        {/* Left: the viewer stays dominant, and now stretches to the full height
+            of the row so its bottom edge meets the support column's, flush with
+            the top of the footer. The breakdown strip that used to sit below it
+            is gone: the viewer's own Shaded / Wireframe / Clay modes show the
+            same thing, live, rather than as three static thumbnails. */}
+        <div className="flex flex-col min-[900px]:border-r-2 min-[900px]:border-divider">
           <ProjectViewer
             modelPath={project.model}
             poster={project.poster}
             posterAlt={project.posterAlt}
-            className="h-[400px] w-full min-[900px]:h-[660px]"
+            wrapperClassName="flex flex-1 flex-col"
+            className="min-h-[400px] w-full flex-1 min-[900px]:min-h-[660px]"
           />
 
           {project.video && (
@@ -88,8 +92,6 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
               title={`${project.title}: animation`}
             />
           )}
-
-          <BreakdownStrip breakdowns={project.breakdowns} />
         </div>
 
         {/* Right: the support column. */}

@@ -107,24 +107,15 @@ Inside `portfolio-assets`, build exactly this structure:
 portfolio-assets/
   red-velvet-chair/
     chair.glb
-    wireframe.jpg
-    uv.jpg
-    blockout.jpg
   low-poly-island/
     island.glb
-    wireframe.jpg
-    uv.jpg
-    blockout.jpg
   lego-batman/
     batman.glb
-    wireframe.jpg
-    uv.jpg
-    blockout.jpg
 ```
 
-The three `.glb` files are the only ones needed to switch the viewers on. The
-wireframe, UV and blockout stills fill the strip at the bottom of each project
-page, and can follow later.
+Three files, and that is the whole upload. There are no wireframe or blockout
+stills to prepare: the viewer shows those live, on the real mesh, through its
+own Shaded / Wireframe / Clay buttons.
 
 Check the sizes before pushing:
 

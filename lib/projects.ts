@@ -20,20 +20,13 @@
  * (for example "red-velvet-chair/poster.jpg") as soon as the files are
  * uploaded. See docs/ASSET-HOSTING.md.
  *
- * The breakdown stills are deliberately NOT filled with the alternate renders
- * from ArtStation. That strip is meant to show wireframes, UVs and blockouts:
- * the proof behind the render. Putting more beauty shots there would defeat
- * the point of having it.
+ * There is no separate wireframe or blockout still to supply: the viewer's own
+ * Shaded / Wireframe / Clay modes show the topology live, on the real mesh,
+ * which is better proof than a screenshot of it.
  */
 
 export type Discipline = "Materials" | "Environment" | "Character";
 export type FilterTag = "character" | "environment" | "hard-surface";
-
-export type Breakdown = {
-  label: string;
-  image: string;
-  alt: string;
-};
 
 export type Project = {
   slug: string;
@@ -61,7 +54,6 @@ export type Project = {
   video: string;
   /** Link back to the original ArtStation post, if there is one. */
   artstation: string;
-  breakdowns: Breakdown[];
 };
 
 export const projects: Project[] = [
@@ -93,23 +85,6 @@ export const projects: Project[] = [
     model: "red-velvet-chair/chair.glb",
     video: "",
     artstation: "https://www.artstation.com/artwork/dL8Pm1",
-    breakdowns: [
-      {
-        label: "Wireframe",
-        image: "red-velvet-chair/wireframe.jpg",
-        alt: "Wireframe view of the chair showing its topology",
-      },
-      {
-        label: "UV layout",
-        image: "red-velvet-chair/uv.jpg",
-        alt: "UV layout for the chair",
-      },
-      {
-        label: "Blockout",
-        image: "red-velvet-chair/blockout.jpg",
-        alt: "Early grey blockout of the chair",
-      },
-    ],
   },
   {
     slug: "low-poly-island",
@@ -139,23 +114,6 @@ export const projects: Project[] = [
     model: "low-poly-island/island.glb",
     video: "",
     artstation: "https://www.artstation.com/artwork/5e8JBJ",
-    breakdowns: [
-      {
-        label: "Wireframe",
-        image: "low-poly-island/wireframe.jpg",
-        alt: "Wireframe view showing the island's low poly topology",
-      },
-      {
-        label: "UV layout",
-        image: "low-poly-island/uv.jpg",
-        alt: "UV layout for the island",
-      },
-      {
-        label: "Blockout",
-        image: "low-poly-island/blockout.jpg",
-        alt: "Early grey blockout of the island silhouette",
-      },
-    ],
   },
   {
     slug: "lego-batman",
@@ -183,23 +141,6 @@ export const projects: Project[] = [
     model: "lego-batman/batman.glb",
     video: "",
     artstation: "https://www.artstation.com/artwork/kw4GXK",
-    breakdowns: [
-      {
-        label: "Wireframe",
-        image: "lego-batman/wireframe.jpg",
-        alt: "Wireframe view of the LEGO Batman model",
-      },
-      {
-        label: "UV layout",
-        image: "lego-batman/uv.jpg",
-        alt: "UV layout for the LEGO Batman model",
-      },
-      {
-        label: "Blockout",
-        image: "lego-batman/blockout.jpg",
-        alt: "Early grey blockout of the minifigure",
-      },
-    ],
   },
 ];
 

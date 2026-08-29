@@ -119,25 +119,27 @@ npm run check-uploads -- ../portfolio-assets
 
 ---
 
-## 4. The stills that go alongside
+## 4. The still that goes alongside
 
-Each project wants a poster and three breakdown images.
+Each project needs **one** image: the poster, used as the card thumbnail on the
+homepage and as the viewer's pre-load state.
 
-| Image | Purpose | Guidance |
-| --- | --- | --- |
-| `poster.jpg` | Card thumbnail and the viewer's pre-load state | Landscape, roughly 3:2, 2000px wide is plenty. Export as **WebP or AVIF** if you can: half the size of JPEG at the same quality. |
-| `wireframe.jpg` | Proves the topology | Viewport render with wireframe overlay, or a Freestyle pass. This is the image a modeller looks at first. |
-| `uv.jpg` | Proves the UVs | Screenshot of the UV editor with the layout visible. |
-| `blockout.jpg` | Proves the process | An early grey-shaded stage. Shows how you got there. |
+Landscape, roughly 3:2, 2000px wide is plenty. Export as **WebP or AVIF** if
+you can: about half the size of JPEG at the same quality.
+
+There is no wireframe, UV or blockout still to prepare. The viewer renders
+those live from the real mesh via its Shaded / Wireframe / Clay buttons, which
+is better evidence than a screenshot of the same thing.
 
 ### The hero render, specifically
 
-One landscape render, **2560px wide or more**, used full-bleed behind the
-homepage headline.
+The homepage hero uses whichever project is first in `lib/projects.ts`, shown
+full-bleed behind the headline.
 
-**Keep the bottom-left third clear.** The H1 sits there, and although it carries
-a text shadow, a busy subject behind it will fight the type. Compose with the
-subject to the right, or leave sky or negative space at the lower left.
+**Keep the bottom-left third clear.** The three words and the line beneath them
+sit there, and although the type carries a shadow, a busy subject behind it will
+fight the copy. Compose with the subject to the right, or leave negative space
+at the lower left.
 
 ---
 
@@ -147,7 +149,6 @@ subject to the right, or leave sky or negative space at the lower left.
 | --- | --- |
 | Model `.glb` | under 5 MB |
 | Poster render | under 400 KB |
-| Each breakdown still | under 250 KB |
 | Video, if any | under 15 MB |
 | **Project total** | **under 20 MB** |
 
