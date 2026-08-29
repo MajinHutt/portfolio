@@ -29,11 +29,8 @@ slug will be, in lower case with hyphens:
 ```
 portfolio-assets/
   red-velvet-chair/
-    poster.jpg
     chair.glb
-    wireframe.jpg
-    uv.jpg
-    blockout.jpg
+    poster.jpg
 ```
 
 Check the sizes, then push:

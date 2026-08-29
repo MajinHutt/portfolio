@@ -59,15 +59,19 @@ git clone https://github.com/majinhutt/portfolio-assets.git
 
 ```
 portfolio-assets/
-  low-poly-island/
+  red-velvet-chair/
+    chair.glb
     poster.jpg
+  low-poly-island/
     island.glb
-    wireframe.jpg
-    uv.jpg
-    blockout.jpg
-  mug/
-    ...
+    poster.jpg
+  lego-batman/
+    batman.glb
+    poster.jpg
 ```
+
+Two files per project: the model and one poster render. There are no wireframe,
+UV or blockout stills, because the viewer shows those live from the real mesh.
 
 4. Check the files are within jsDelivr's limits before pushing:
 
