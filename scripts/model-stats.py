@@ -123,9 +123,31 @@ def analyse(name: str, path: str):
         w, h, fmt = image_size(blob)
         resolutions.append((w, h, fmt))
 
+    # Per-mesh, because a total on its own can actively mislead. The island
+    # read as 137k triangles until it was clear that 96% of them were a single
+    # subdivided ocean plane, and the island itself was 6k.
+    node_name = {}
+    for n in js.get("nodes", []):
+        if "mesh" in n:
+            node_name.setdefault(n["mesh"], n.get("name", ""))
+
+    per_mesh = []
+    for i, mesh in enumerate(js.get("meshes", [])):
+        t = 0
+        for prim in mesh.get("primitives", []):
+            idx = prim.get("indices")
+            if idx is not None and idx < len(accessors):
+                t += accessors[idx]["count"] // 3
+        per_mesh.append((mesh.get("name") or node_name.get(i, "") or f"mesh {i}", t))
+    per_mesh.sort(key=lambda r: -r[1])
+
     print(f"\n=== {name} ===")
     print(f"  File size    : {len(data) / 1024 / 1024:.2f} MB")
     print(f"  Triangles    : {tris:,}")
+    if len(per_mesh) > 1 and tris:
+        print("  Per mesh     :")
+        for mesh_name, count in per_mesh:
+            print(f"     {mesh_name:<26}{count:>10,}  {count / tris * 100:5.1f}%")
     print(f"  Meshes       : {len(js.get('meshes', []))}")
     print(f"  Materials    : {len(js.get('materials', []))}")
     print(f"  Textures     : {len(js.get('images', []))}")
