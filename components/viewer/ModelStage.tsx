@@ -50,10 +50,25 @@ const CINEMATIC = true;
  * using it for the hero too avoids shipping two 3D runtimes. (See docs/DECISIONS.md.)
  */
 
-/** Materials used for the non-shaded display modes. Created once. */
+/**
+ * Materials used for the non-shaded display modes. Created once.
+ *
+ * Both are DoubleSide deliberately. glTF materials carry a `doubleSided` flag,
+ * which Blender sets whenever backface culling is off, and every model here
+ * exports that way. three.js honours it for the authored materials but these
+ * overrides are built from scratch, and three defaults new materials to
+ * FrontSide. The result was back-facing polygons being culled in clay and
+ * wireframe only: the chair appeared to have holes through its lower backrest
+ * and armrest that were not there in shaded mode.
+ *
+ * DoubleSide is also simply the right choice for an inspection mode. Culling
+ * hides geometry, and hidden geometry is the opposite of what someone switching
+ * to wireframe is trying to see.
+ */
 const WIREFRAME_MATERIAL = new THREE.MeshBasicMaterial({
   color: "#f3f2f2",
   wireframe: true,
+  side: THREE.DoubleSide,
 });
 
 const CLAY_MATERIAL = new THREE.MeshStandardMaterial({
@@ -64,6 +79,7 @@ const CLAY_MATERIAL = new THREE.MeshStandardMaterial({
   color: "#a8a29e",
   roughness: 0.9,
   metalness: 0,
+  side: THREE.DoubleSide,
 });
 
 /**
