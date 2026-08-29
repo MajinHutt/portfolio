@@ -2,6 +2,7 @@
 
 import { HumanGate } from "./HumanGate";
 import { buildMailto, decodeEmail } from "@/lib/human";
+import { notify } from "@/lib/notify";
 
 /**
  * The CV, behind the check, in both of its states.
@@ -33,6 +34,7 @@ export function ProtectedCvDownload({
             href={href}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => notify("CV downloaded")}
             className="t-button inline-flex items-center whitespace-nowrap border-2 border-divider bg-accent px-[18px] py-3 text-white no-underline transition-colors duration-[140ms] ease-out hover:bg-accent-700"
           >
             Download CV {size ? `(PDF, ${size})` : "(PDF)"} &darr;
@@ -43,6 +45,7 @@ export function ProtectedCvDownload({
               "CV request",
               "Hello James,\n\nI came across your portfolio and would like a copy of your CV.\n\n",
             )}
+            onClick={() => notify("CV requested by email")}
             className="t-button inline-flex items-center whitespace-nowrap border-2 border-divider bg-accent px-[18px] py-3 text-white no-underline transition-colors duration-[140ms] ease-out hover:bg-accent-700"
           >
             Email {decodeEmail()} &rarr;
