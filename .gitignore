@@ -38,3 +38,6 @@ next-env.d.ts
 # Scratch API dumps
 as.json
 proj_*.json
+
+# Favicon preview sheet (regenerate with scripts/build-favicon.py)
+favicon-preview.png

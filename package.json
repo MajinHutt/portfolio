@@ -12,7 +12,8 @@
     "install-hooks": "git config core.hooksPath .githooks",
     "check-uploads": "node scripts/check-uploads.mjs",
     "check-contrast": "node scripts/check-contrast.mjs",
-    "check-url": "node scripts/check-url.mjs"
+    "check-url": "node scripts/check-url.mjs",
+    "build-favicon": "python scripts/build-favicon.py"
   },
   "dependencies": {
     "@react-three/drei": "^9.114.3",
