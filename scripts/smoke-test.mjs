@@ -77,7 +77,16 @@ for (const [route, body] of Object.entries(pages)) {
 
 // ── Assets ──────────────────────────────────────────────────────────────────
 console.log("\n  Assets");
-const posterUrls = [...new Set([...home.matchAll(/https:\/\/cdn\.jsdelivr\.net[^"']*poster\.jpg[^"']*/g)].map((m) => m[0]))];
+// The backslash exclusion matters: these URLs also appear inside the escaped
+// RSC payload, where a trailing \" would otherwise be captured as part of them
+// and count as a fourth, non-existent poster.
+const posterUrls = [
+  ...new Set(
+    [...home.matchAll(/https:\/\/cdn\.jsdelivr\.net[^"'\\]*poster\.jpg[^"'\\]*/g)].map(
+      (m) => m[0],
+    ),
+  ),
+];
 check("three posters referenced", posterUrls.length === 3, `found ${posterUrls.length}`);
 check("posters are version-busted", posterUrls.every((u) => /\?v=\d+/.test(u)));
 check("no ArtStation hotlinks", !/cdn[ab]\.artstation\.com/.test(home));
@@ -114,7 +123,9 @@ check("CV page offers the download", /Verify to download/.test(pages["/cv"]));
 console.log("\n  Internal links");
 const internal = new Set();
 for (const body of Object.values(pages)) {
-  for (const m of body.matchAll(/href="(\/[^"#?]*)"/g)) internal.add(m[1]);
+  for (const m of body.matchAll(/href="(\/[^"#?]*)"/g)) {
+    if (!m[1].startsWith("/_next/")) internal.add(m[1]);
+  }
 }
 for (const href of [...internal].sort()) {
   const r = await get(href);
