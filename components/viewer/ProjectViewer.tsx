@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { asset } from "@/lib/assets";
 import { EmptyPlate } from "@/components/Plate";
+import { ViewerBoundary } from "./ViewerBoundary";
 import { VIEWER_MODES, type ViewerMode } from "./types";
 
 /**
@@ -89,6 +90,8 @@ export function ProjectViewer({
   // A dropped WebGL context (tab backgrounded on mobile, driver reset) should
   // fall back to the poster rather than leaving an empty plate.
   const handleContextLost = useCallback(() => setLoaded(false), []);
+  // Same treatment when the viewer throws outright: show the poster again.
+  const handleViewerFailure = useCallback(() => setLoaded(false), []);
 
   // The progress overlay is only meaningful when a .glb is actually streaming.
   const showLoading = Boolean(modelUrl) && !loaded && nearViewport;
@@ -115,17 +118,19 @@ export function ProjectViewer({
         )}
 
         {nearViewport && (
-          <div className="absolute inset-0">
-            <ModelStage
-              url={modelUrl}
-              mode={mode}
-              allowZoom={allowZoom}
-              active={onScreen}
-              onProgress={handleProgress}
-              onLoaded={handleLoaded}
-              onContextLost={handleContextLost}
-            />
-          </div>
+          <ViewerBoundary fallback={null} onFailure={handleViewerFailure}>
+            <div className="absolute inset-0">
+              <ModelStage
+                url={modelUrl}
+                mode={mode}
+                allowZoom={allowZoom}
+                active={onScreen}
+                onProgress={handleProgress}
+                onLoaded={handleLoaded}
+                onContextLost={handleContextLost}
+              />
+            </div>
+          </ViewerBoundary>
         )}
 
         {/* Determinate loading state over the poster. */}

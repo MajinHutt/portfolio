@@ -137,12 +137,25 @@ function LoadedModel({ url }: { url: string }) {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) return;
 
+    // Wrapped because a clip whose target nodes cannot be resolved will throw
+    // from inside three's PropertyBinding, and a model that fails to animate
+    // should still be a model you can look at.
     const playing = Object.values(actions).filter(Boolean);
-    playing.forEach((action) => {
-      action!.reset().setLoop(THREE.LoopRepeat, Infinity).play();
-    });
+    try {
+      playing.forEach((action) => {
+        action?.reset().setLoop(THREE.LoopRepeat, Infinity).play();
+      });
+    } catch (error) {
+      console.error("[viewer] could not start the model's animation:", error);
+    }
 
-    return () => playing.forEach((action) => action!.stop());
+    return () => {
+      try {
+        playing.forEach((action) => action?.stop());
+      } catch {
+        // The mixer may already be gone if the scene unmounted first.
+      }
+    };
   }, [actions, animations]);
 
   // Enable shadow casting on the author's geometry.
