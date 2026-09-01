@@ -195,6 +195,47 @@ export function ProjectViewer({
               ))}
             </div>
 
+            {/* Interaction cue, top-right, mirroring the mode cluster opposite.
+                Only shown on interactive viewers: the homepage cards cannot be
+                orbited, and promising an interaction that does not exist is
+                worse than not signalling one. The design otherwise avoids
+                icons, but a glyph is read at a glance where a sentence is not,
+                and the point here is that people notice it. */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute right-4 top-4 hidden items-center gap-3 border border-[rgba(243,242,242,0.35)] bg-[rgba(22,21,15,0.72)] px-3 py-2 min-[600px]:flex"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#f7f6f5"
+                strokeWidth="1.6"
+                strokeLinecap="square"
+              >
+                {/* Orbit: a body with a ring around it. */}
+                <circle cx="12" cy="12" r="3.5" />
+                <ellipse cx="12" cy="12" rx="10" ry="4.5" transform="rotate(-28 12 12)" />
+              </svg>
+              <span className="h-3 w-px bg-[rgba(243,242,242,0.35)]" />
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#f7f6f5"
+                strokeWidth="1.6"
+                strokeLinecap="square"
+              >
+                {/* Zoom: arrows apart on a diagonal. */}
+                <path d="M4 10V4h6" />
+                <path d="M20 14v6h-6" />
+                <path d="M4 4l6 6" />
+                <path d="M20 20l-6-6" />
+              </svg>
+            </div>
+
             {/* Hint + current mode chip, bottom-right. */}
             <div className="pointer-events-none absolute bottom-3 right-3 flex items-center gap-3 min-[600px]:bottom-4 min-[600px]:right-4">
               <span className="text-[11px] uppercase tracking-nav text-[rgba(243,242,242,0.7)]">

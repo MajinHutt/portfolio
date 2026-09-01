@@ -174,10 +174,15 @@ export function getNextProject(slug: string): Project {
 /**
  * The still shown behind the homepage headline.
  *
- * A static render rather than a live viewer, deliberately. It keeps the hero
- * off the GPU entirely, so the largest paint on the page is just an image, and
- * it leaves the three live models to the cards below where they are the point.
- * It also stops the hero and the feature card rendering the same piece twice.
+ * Captured from the site's own viewer rather than taken from ArtStation, so it
+ * carries the same lighting, tone mapping and near-black stage as the live
+ * canvases below it. James's published renders have their own backdrops, which
+ * looked wrong sitting above three dark plates.
+ *
+ * A still rather than a fourth live viewer: it keeps the largest paint on the
+ * page off the GPU entirely.
  */
-export const heroProject =
-  projects.find((p) => p.slug === "lego-batman") ?? projects[0];
+export const heroStill = {
+  image: "lego-batman/hero.jpg",
+  alt: "Render of a LEGO Batman minifigure, lit against a near-black background",
+};

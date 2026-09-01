@@ -298,7 +298,7 @@ export default function ModelStage({
       camera={{ position: [4.5, 3, 5.5], fov: 38 }}
       gl={{
         antialias: true,
-        preserveDrawingBuffer: false,
+        preserveDrawingBuffer: true /* TEMP-CAPTURE */,
         powerPreference: "high-performance",
       }}
       onCreated={({ gl }) => {
