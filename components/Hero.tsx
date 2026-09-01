@@ -71,12 +71,21 @@ export function Hero() {
               </p>
             </div>
 
-            <div className="flex">
+            <div className="flex flex-col gap-2 min-[600px]:flex-row">
               <Link
                 href="/#portfolio"
                 className="t-button inline-flex items-center justify-center whitespace-nowrap border-2 border-divider bg-accent px-[18px] py-[13px] text-white no-underline transition-colors duration-[140ms] ease-out hover:bg-accent-700 min-[600px]:justify-start min-[600px]:py-3"
               >
                 Browse portfolio &rarr;
+              </Link>
+              {/* A second route to the writing, above the fold, for a reader who
+                  never scrolls as far as the band at the foot of the About
+                  block. */}
+              <Link
+                href="/about"
+                className="t-button inline-flex items-center justify-center whitespace-nowrap border-2 border-divider px-[18px] py-[11px] text-fg no-underline transition-colors duration-[140ms] ease-out hover:bg-[rgba(247,246,245,0.1)] min-[600px]:justify-start"
+              >
+                About the artist
               </Link>
             </div>
           </div>

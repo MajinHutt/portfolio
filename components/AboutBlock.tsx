@@ -1,8 +1,15 @@
+import Link from "next/link";
 import { site } from "@/lib/site";
 
 /**
  * Desktop: a `380px 1fr` split where the left cell holds nothing but the H2:
  * the whitespace is deliberate and structural, not an oversight.
+ *
+ * The block ends in a full-bleed band linking to the About page. That band is
+ * deliberately the loudest non-project element on the homepage, because for a
+ * university application the writing carries as much weight as the renders,
+ * and a reader who only ever sees three thumbnails has judged half the work.
+ * A nav item alone is too easy to miss.
  */
 export function AboutBlock() {
   return (
@@ -46,6 +53,28 @@ export function AboutBlock() {
           </div>
         </div>
       </div>
+
+      <Link
+        href="/about"
+        className="group block border-t-2 border-divider bg-panel no-underline transition-colors duration-[140ms] ease-out hover:bg-accent"
+      >
+        <div className="mx-auto flex max-w-page items-center justify-between gap-6 px-4 py-7 min-[900px]:px-10 min-[900px]:py-8">
+          <div>
+            <p className="t-eyebrow mb-2 text-[rgba(247,246,245,0.65)] transition-colors duration-[140ms] ease-out group-hover:text-[rgba(255,255,255,0.8)]">
+              The thinking behind the work
+            </p>
+            <p className="t-h3 text-white min-[900px]:text-[32px]">
+              Learn more about me as an artist
+            </p>
+          </div>
+          <span
+            aria-hidden="true"
+            className="shrink-0 text-[26px] text-white transition-transform duration-300 ease-out group-hover:translate-x-2 motion-reduce:transition-none min-[900px]:text-[32px]"
+          >
+            &rarr;
+          </span>
+        </div>
+      </Link>
     </section>
   );
 }

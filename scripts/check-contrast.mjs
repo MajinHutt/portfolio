@@ -113,6 +113,9 @@ const PAIRS = [
 
   // ── Footer / panel ───────────────────────────────────────────────────────
   ["Footer text on panel", C.fg, C.panel, "normal", ""],
+  ["About CTA band on panel", C.white, C.panel, "large", "homepage band"],
+  ["About CTA band on hover", C.white, C.accent, "large", "band hover fill"],
+  ["About CTA eyebrow", "#a6a2a0", C.panel, "normal", "65% white over panel"],
   ["Footer link hover", C.accentLight, C.panel, "normal", ""],
   ["Footer legal line", C.fgMuted, C.panel, "normal", "11px"],
   ["Footer CV button label", C.white, C.accent, "normal", ""],
