@@ -14,6 +14,26 @@ export const metadata: Metadata = {
  * open without wincing.
  */
 
+/**
+ * The opening statement, set large and in full white. This is what an
+ * admissions tutor reads first, so it carries the ambition and the reasoning.
+ */
+const LEAD: string[] = [
+  site.aboutBody,
+  "Once I started 3D modelling, my interest in it became apparent almost instantly. My favourite show of all time is Dragon Ball, and the idea of animating scenes like that inspired me to continue. Now I want to level up from just modelling to animating these scenes with the guidance of UWE, and I hope one day I can work for Toei Animation themselves.",
+  "Games and film have always been a big part of my life, and looking back, I think that's really where my eye for this stuff started. I've been playing GTA for years, and watching the series go from GTA V to VI has been genuinely inspiring to see up close; not just the graphical leap, but how much more alive and considered everything feels, from lighting to how a city actually moves. My favourite game of all time is Elden Ring, closely followed by Terraria, which I love for almost the opposite reason. It's made by a tiny team, and proves you don't need a AAA budget to build something people fall completely into. I've also been to see Spider-Man: Brand New Day three times at the cinema, because I can't get enough of the CGI and the way the story unfolds. Whether it's a huge studio production or something built by a handful of people, I've always been drawn to the same thing: how much craft and thought goes into making a world feel real. That same love of building things carries over into real life too. I've got a LEGO collection I've been adding to for years, which is exactly why my first serious Blender piece was a LEGO Batman minifigure.",
+];
+
+/**
+ * The supporting detail, smaller and muted. Read by whoever is still going
+ * after the opening, which tends to be the people who matter most.
+ */
+const SUPPORTING: string[] = [
+  "Most of what I know came from rebuilding the same things until they stopped breaking. A LEGO minifigure taught me that simple forms are the least forgiving, because everyone already knows what they should look like. A dining chair from my own house taught me how far materials and lighting carry a render once the shape is right.",
+  "The personal training background is not a detour. Knowing how a body actually moves, which planes it moves through and what drives each motion, is the difference between a character that reads as alive and one that reads as posed.",
+  "One of my earlier modelling attempts was a Glock 19, and it didn't go the way I planned. I jumped straight into a technically demanding piece before I'd properly built up the fundamentals, and it showed. Rather than push through and end up with something I wasn't happy with, I took a step back and made the red velvet dining chair instead, a piece that let me really focus on materials, lighting and form without fighting the geometry the whole way through. That's been a useful lesson for how I approach learning in general: build the foundation properly before chasing the hard stuff. I'll be coming back to finish the Glock 19 once I've got the skills to do it justice.",
+];
+
 const SKILLS: { group: string; items: string[] }[] = [
   {
     group: "Modelling",
@@ -96,23 +116,25 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-1 gap-8 px-4 pb-8 pt-2 min-[900px]:grid-cols-[1fr_300px] min-[900px]:gap-12 min-[900px]:px-10 min-[900px]:py-9">
             <div>
-              <p className="mb-5 text-[17px] leading-[1.5] text-fg min-[900px]:text-[19px]">
-                {site.aboutBody}
-              </p>
-              <p className="mb-5 text-[15px] leading-[1.6] text-fg-muted">
-                Most of what I know came from rebuilding the same things until
-                they stopped breaking. A LEGO minifigure taught me that simple
-                forms are the least forgiving, because everyone already knows
-                what they should look like. A dining chair from my own house
-                taught me how far materials and lighting carry a render once the
-                shape is right.
-              </p>
-              <p className="text-[15px] leading-[1.6] text-fg-muted">
-                The personal training background is not a detour. Knowing how a
-                body actually moves, which planes it moves through and what
-                drives each motion, is the difference between a character that
-                reads as alive and one that reads as posed.
-              </p>
+              {LEAD.map((paragraph) => (
+                <p
+                  key={paragraph.slice(0, 32)}
+                  className="mb-5 text-[17px] leading-[1.5] text-fg min-[900px]:text-[19px]"
+                >
+                  {paragraph}
+                </p>
+              ))}
+
+              {SUPPORTING.map((paragraph, i) => (
+                <p
+                  key={paragraph.slice(0, 32)}
+                  className={`text-[15px] leading-[1.6] text-fg-muted ${
+                    i < SUPPORTING.length - 1 ? "mb-5" : ""
+                  }`}
+                >
+                  {paragraph}
+                </p>
+              ))}
             </div>
 
             <div>
