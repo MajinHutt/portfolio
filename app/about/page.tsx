@@ -38,11 +38,6 @@ const SKILLS: { group: string; items: string[] }[] = [
 /** From James's CV. Years are the award year. */
 const EDUCATION = [
   {
-    title: "BA (Hons) 3D Animation",
-    where: "Currently applying",
-    year: "2027",
-  },
-  {
     title: "Level 3 Diploma Practitioner in Personal Training (RQF)",
     where: "",
     year: "2026",
