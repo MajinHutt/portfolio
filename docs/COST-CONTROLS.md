@@ -51,6 +51,8 @@ not silently bill you.
    feature anyway).
 6. **Do not enable Vercel Analytics or Speed Insights** from the dashboard.
    They have their own free allowances and prompt to upgrade when exceeded.
+   Cloudflare Web Analytics covers the same ground, free and unmetered, with no
+   card attached. See `docs/ANALYTICS.md`.
 
 ### Hobby limits, for context
 

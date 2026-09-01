@@ -4,6 +4,7 @@ import "./globals.css";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { IntroLoader } from "@/components/IntroLoader";
+import { Analytics } from "@/components/Analytics";
 import { site } from "@/lib/site";
 
 /**
@@ -92,6 +93,7 @@ export default function RootLayout({
         <SiteHeader />
         <main id="main">{children}</main>
         <SiteFooter />
+        <Analytics />
       </body>
     </html>
   );
