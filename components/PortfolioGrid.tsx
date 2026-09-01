@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useLayoutEffect, useRef, useState } from "react";
-import { Plate } from "@/components/Plate";
+import { ProjectViewer } from "@/components/viewer/ProjectViewer";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { filters, projects, type FilterTag } from "@/lib/projects";
 
@@ -152,13 +152,17 @@ export function PortfolioGrid() {
           >
             <Link href={`/work/${feature.slug}`} className="block no-underline">
               <div className="relative overflow-hidden">
-                <Plate
-                  src={feature.poster}
-                  alt={feature.posterAlt}
-                  priority
-                  sizes="100vw"
-                  className="h-[300px] min-[900px]:h-[440px] min-[1200px]:h-[520px]"
-                  imageClassName="transition-transform duration-[600ms] ease-out group-hover:scale-[1.03] motion-reduce:transform-none motion-reduce:transition-none"
+                {/* Live model rather than a still. Non-interactive, so the
+                    whole card stays one click target: it rotates on its own and
+                    a drag does not fight the link. */}
+                <ProjectViewer
+                  modelPath={feature.model}
+                  poster={feature.poster}
+                  posterAlt={feature.posterAlt}
+                  controls={false}
+                  allowZoom={false}
+                  interactive={false}
+                  className="h-[300px] w-full min-[900px]:h-[440px] min-[1200px]:h-[520px]"
                 />
 
                 <span className="absolute left-0 top-0 z-10 bg-accent px-3 py-[6px] text-[11px] font-extrabold uppercase tracking-eyebrow text-white">
@@ -218,12 +222,14 @@ export function PortfolioGrid() {
                   className="block no-underline"
                 >
                   <div className="relative overflow-hidden">
-                    <Plate
-                      src={project.poster}
-                      alt={project.posterAlt}
-                      sizes="(max-width: 899px) 100vw, 50vw"
-                      className="h-[260px] min-[900px]:h-[300px] min-[1200px]:h-[340px]"
-                      imageClassName="transition-transform duration-[600ms] ease-out group-hover:scale-[1.04] motion-reduce:transform-none motion-reduce:transition-none"
+                    <ProjectViewer
+                      modelPath={project.model}
+                      poster={project.poster}
+                      posterAlt={project.posterAlt}
+                      controls={false}
+                      allowZoom={false}
+                      interactive={false}
+                      className="h-[260px] w-full min-[900px]:h-[300px] min-[1200px]:h-[340px]"
                     />
 
                     <span className="absolute left-0 top-0 z-10 bg-accent px-3 py-[6px] text-[11px] font-extrabold uppercase tracking-eyebrow text-white">

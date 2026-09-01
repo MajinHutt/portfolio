@@ -25,6 +25,12 @@ export function ProjectViewer({
   controls = true,
   /** Off for the hero, so the wheel scrolls the page instead of zooming. */
   allowZoom = true,
+  /**
+   * Off for the homepage cards. The canvas sits inside a link there, so
+   * swallowing pointer events would mean dragging a card orbited it instead of
+   * following the link. Non-interactive viewers just rotate on their own.
+   */
+  interactive = true,
   className = "",
   /** Applied to the outer wrapper, so a caller can make the stage fill a column. */
   wrapperClassName = "",
@@ -34,6 +40,7 @@ export function ProjectViewer({
   posterAlt: string;
   controls?: boolean;
   allowZoom?: boolean;
+  interactive?: boolean;
   className?: string;
   wrapperClassName?: string;
 }) {
@@ -119,7 +126,11 @@ export function ProjectViewer({
 
         {nearViewport && (
           <ViewerBoundary fallback={null} onFailure={handleViewerFailure}>
-            <div className="absolute inset-0">
+            <div
+              className={`absolute inset-0 ${
+                interactive ? "" : "pointer-events-none"
+              }`}
+            >
               <ModelStage
                 url={modelUrl}
                 mode={mode}
