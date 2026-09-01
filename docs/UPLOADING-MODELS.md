@@ -188,12 +188,23 @@ adding the variable.
 
 **The model is on its side.** `+Y Up` was off during export.
 
-**You replaced a file and the old one still appears.** jsDelivr caches for
-about 12 hours. Force it to refresh by visiting:
+**You replaced a file and the old one still appears.** There are two caches
+between the file and the visitor, and they need different treatment.
+
+First, purge jsDelivr's copy:
 
 ```
 https://purge.jsdelivr.net/gh/MajinHutt/portfolio-assets@main/red-velvet-chair/chair.glb
 ```
+
+Second, and easy to forget: **every visitor who already loaded the old file has
+it in their own browser for a week**, because jsDelivr sends `max-age=604800`.
+Purging the CDN does nothing for them. Bump `ASSET_VERSION` in `lib/assets.ts`
+and push. That changes the URL, so every browser fetches fresh.
+
+Skipping the second step caused a real bug: a broken `island.glb` stayed
+cached in one browser and crashed the project page, while the site looked
+perfectly fine in every fresh browser we tested.
 
 **The model is enormous or microscopic.** Apply transforms in Blender
 (Ctrl+A → All Transforms) and export again. The viewer frames on the bounding

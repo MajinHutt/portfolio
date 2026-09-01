@@ -177,6 +177,26 @@ people's projects are common rather than unlikely.
 The check is deliberately not part of `npm run guard`: it needs network access,
 and builds have to work offline and inside Vercel's build sandbox.
 
+## Asset URLs carry a version
+
+`lib/assets.ts` appends `?v=N` to every CDN asset, bumped by hand whenever a
+file is replaced under an existing name.
+
+jsDelivr serves with `max-age=604800`, so a visitor keeps a copy for a week.
+Replacing a file at the same URL does nothing for anyone who already has the
+old one, and purging jsDelivr only clears the CDN's copy, not theirs.
+
+This was not theoretical. `island.glb` was published three times at one URL: a
+broken 1-byte stub, then 320 KB, then 164 KB. A browser holding the broken copy
+threw "Unexpected end of JSON input" and, before the viewer had an error
+boundary, took the whole page down. It was invisible from our side because
+every fresh browser fetched a good copy, and it would have persisted for a week
+per affected visitor.
+
+The version makes the URL itself change, which no cache can survive. The whole
+asset set is well under a megabyte, so re-fetching everything costs nothing
+worth weighing against correctness.
+
 ## A procedural island stands in for missing models
 
 Rather than an empty black rectangle, a project with no `.glb` yet renders a
