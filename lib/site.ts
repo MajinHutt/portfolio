@@ -59,7 +59,7 @@ export const site = {
     { value: "Blender", label: "Primary toolset" },
   ],
   aboutBody:
-    "I taught myself Blender throughout 2026. I care about the parts nobody sees in a render: edge flow that survives a subdivision and UVs that don't stretch. With a diploma in Personal Training, I'm able to take expert understanding of biomechanics and planes of movement, to create the most compelling and realistic characters and scenes. I'm applying to study 3D Animation at degree level to take my creative ability to the next level and pursue a career in 3D modelling and design.",
+    "I taught myself Blender throughout 2026, but have been exposed to 3D animation most of my life with my Dad's work, including time with Autodesk and Unity, and he's often shared and taught me things along the way. I care about the parts nobody sees in a render: edge flow that survives a subdivision and UVs that don't stretch. With a diploma in Personal Training, I'm able to take expert understanding of biomechanics and planes of movement, to create the most compelling and realistic characters and scenes. I'm applying to study 3D Animation at degree level to take my creative ability to the next level and pursue a career in 3D modelling and design.",
 } as const;
 
 export const nav = [
