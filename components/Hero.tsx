@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ProjectViewer } from "@/components/viewer/ProjectViewer";
+import { Plate } from "@/components/Plate";
 import { heroProject, projects } from "@/lib/projects";
 import { site } from "@/lib/site";
 
@@ -14,12 +14,12 @@ export function Hero() {
       <div className="mx-auto grid max-w-page grid-cols-1 min-[900px]:min-h-[620px] min-[900px]:grid-cols-[1fr_360px] min-[1200px]:grid-cols-[1fr_420px]">
         {/* ── Plate ─────────────────────────────────────────────────────── */}
         <div className="relative">
-          <ProjectViewer
-            modelPath={heroProject.model}
-            poster={heroProject.poster}
-            posterAlt={heroProject.posterAlt}
-            controls={false}
-            allowZoom={false}
+          {/* A still, not a viewer: see heroProject in lib/projects.ts. */}
+          <Plate
+            src={heroProject.poster}
+            alt={heroProject.posterAlt}
+            priority
+            sizes="(max-width: 899px) 100vw, 70vw"
             className="h-[420px] w-full min-[900px]:h-full min-[900px]:min-h-[620px]"
           />
 

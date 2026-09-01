@@ -2,7 +2,6 @@
 
 import { HumanGate } from "./HumanGate";
 import { buildMailto, decodeEmail } from "@/lib/human";
-import { notify } from "@/lib/notify";
 
 /**
  * A mailto link that does not exist until a human asks for it.
@@ -29,7 +28,6 @@ export function ProtectedEmail({
       {() => (
         <a
           href={buildMailto(subject, body)}
-          onClick={() => notify("Email link clicked", "footer")}
           className={className}
         >
           {showAddress ? decodeEmail() : label}

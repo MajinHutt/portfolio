@@ -39,8 +39,6 @@ npm run install-hooks
 | [Blender export](docs/BLENDER-EXPORT.md) | Exporting a `.glb` that is small enough to serve |
 | [Asset hosting](docs/ASSET-HOSTING.md) | Setting up or changing where models and renders live |
 | [Cost controls](docs/COST-CONTROLS.md) | Understanding why this cannot generate a bill |
-| [Email alerts](docs/NOTIFICATIONS.md) | Getting notified when someone downloads the CV |
-| [Analytics](docs/ANALYTICS.md) | Seeing how many people visit, and from where |
 | [Accessibility](docs/ACCESSIBILITY.md) | Changing any colour |
 | [Decisions](docs/DECISIONS.md) | Wondering why something is built the way it is |
 

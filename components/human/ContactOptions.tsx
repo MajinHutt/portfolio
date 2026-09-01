@@ -2,7 +2,6 @@
 
 import { HumanGate } from "./HumanGate";
 import { buildMailto, decodeEmail } from "@/lib/human";
-import { notify } from "@/lib/notify";
 
 export type ContactSubject = {
   label: string;
@@ -21,13 +20,11 @@ export function ContactOptions({ subjects }: { subjects: ContactSubject[] }) {
   return (
     <HumanGate
       prompt="Show contact details"
-      onUnlock={() => notify("Contact details revealed")}
     >
       {() => (
         <>
           <a
             href={buildMailto("Hello", "Hello James,\n\n")}
-            onClick={() => notify("Email link clicked", "main address")}
             className="mb-8 block text-[22px] font-extrabold tracking-h3 text-fg no-underline transition-colors duration-[140ms] ease-out hover:text-accent-400 min-[900px]:text-[28px]"
           >
             {decodeEmail()}
@@ -38,7 +35,6 @@ export function ContactOptions({ subjects }: { subjects: ContactSubject[] }) {
               <li key={item.label} className="border-b-2 border-divider">
                 <a
                   href={buildMailto(item.subject, item.body)}
-                  onClick={() => notify("Email link clicked", item.label)}
                   className="group flex items-center justify-between gap-4 py-4 no-underline"
                 >
                   <span className="text-[15px] font-semibold text-fg transition-colors duration-[140ms] ease-out group-hover:text-accent-400">

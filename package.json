@@ -14,7 +14,8 @@
     "check-contrast": "node scripts/check-contrast.mjs",
     "check-url": "node scripts/check-url.mjs",
     "build-favicon": "python scripts/build-favicon.py",
-    "model-stats": "python scripts/model-stats.py"
+    "model-stats": "python scripts/model-stats.py",
+    "smoke": "node scripts/smoke-test.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^9.114.3",

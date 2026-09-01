@@ -22,14 +22,11 @@ export function HumanGate({
   prompt,
   children,
   className = "",
-  onUnlock,
 }: {
   /** Label on the button that opens the check. */
   prompt: string;
   children: () => React.ReactNode;
   className?: string;
-  /** Fired once, when the check is passed. */
-  onUnlock?: () => void;
 }) {
   const verified = useHumanVerified();
   const [open, setOpen] = useState(false);
@@ -74,7 +71,6 @@ export function HumanGate({
             onClick={() => {
               if (option === challenge.answer) {
                 markVerified();
-                onUnlock?.();
               } else {
                 setWrong(true);
                 setChallenge(pickChallenge());

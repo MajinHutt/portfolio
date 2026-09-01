@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useLayoutEffect, useRef } from "react";
+import { Suspense, useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { Canvas } from "@react-three/fiber";
 import {
   AdaptiveDpr,
@@ -13,7 +13,7 @@ import {
   useProgress,
 } from "@react-three/drei";
 import * as THREE from "three";
-import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
+import { SkeletonUtils, type OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import { PlaceholderIsland } from "./PlaceholderIsland";
 import { Bloom, EffectComposer, Vignette } from "@react-three/postprocessing";
 import type { ViewerMode } from "./types";
@@ -124,6 +124,24 @@ function LoadedModel({ url }: { url: string }) {
   const group = useRef<THREE.Group>(null);
   const { scene, animations } = useGLTF(url, "/draco/");
 
+  /**
+   * Clone the scene, always.
+   *
+   * useGLTF caches by URL and hands back the same Object3D to every caller. A
+   * three.js object can only have one parent, so rendering it in two places
+   * does not duplicate it: the second mount steals it from the first.
+   *
+   * That is exactly what happened when the homepage cards became live viewers.
+   * The hero and the feature card both show red-velvet-chair/chair.glb, so the
+   * card yanked the chair out of the hero and the hero went blank a moment
+   * after loading.
+   *
+   * SkeletonUtils.clone rather than scene.clone() because it also rebinds
+   * skinned meshes to their cloned skeleton, which a plain clone leaves
+   * pointing at the original's bones.
+   */
+  const model = useMemo(() => SkeletonUtils.clone(scene), [scene]);
+
   // Any clips exported with the model play on a loop. The island's boat rocks
   // on the water this way, which is the sort of thing a still render cannot
   // show and is half the reason for having a live viewer at all.
@@ -160,17 +178,17 @@ function LoadedModel({ url }: { url: string }) {
 
   // Enable shadow casting on the author's geometry.
   useLayoutEffect(() => {
-    scene.traverse((child) => {
+    model.traverse((child) => {
       if (child instanceof THREE.Mesh) {
         child.castShadow = true;
         child.receiveShadow = true;
       }
     });
-  }, [scene]);
+  }, [model]);
 
   return (
     <group ref={group}>
-      <primitive object={scene} />
+      <primitive object={model} />
     </group>
   );
 }

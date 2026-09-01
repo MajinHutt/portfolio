@@ -171,5 +171,13 @@ export function getNextProject(slug: string): Project {
   return projects[(i + 1) % projects.length];
 }
 
-/** The piece rendered live in the homepage hero. */
-export const heroProject = projects[0];
+/**
+ * The still shown behind the homepage headline.
+ *
+ * A static render rather than a live viewer, deliberately. It keeps the hero
+ * off the GPU entirely, so the largest paint on the page is just an image, and
+ * it leaves the three live models to the cards below where they are the point.
+ * It also stops the hero and the feature card rendering the same piece twice.
+ */
+export const heroProject =
+  projects.find((p) => p.slug === "lego-batman") ?? projects[0];
