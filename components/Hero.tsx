@@ -53,7 +53,6 @@ export function Hero() {
         {/* ── Support column ────────────────────────────────────────────── */}
         <div className="flex flex-col min-[900px]:border-l-2 min-[900px]:border-divider">
           <div className="border-b-2 border-divider px-4 pb-7 pt-6 min-[900px]:px-8 min-[900px]:pb-7 min-[900px]:pt-8">
-            {/* Mobile H1 lives on the light ground, not over the render. */}
             {/* Mobile: the words and their footnote sit on the solid ground
                 rather than over the render, where the smaller line would be
                 hard to read. Hidden on desktop, where the overlay carries it. */}
@@ -71,10 +70,12 @@ export function Hero() {
               </p>
             </div>
 
-            <div className="flex flex-col gap-2 min-[600px]:flex-row">
+            {/* Stacked, not side by side: the support column is 420px at most,
+                and the two labels together overflow it. */}
+            <div className="flex flex-col items-start gap-2">
               <Link
                 href="/#portfolio"
-                className="t-button inline-flex items-center justify-center whitespace-nowrap border-2 border-divider bg-accent px-[18px] py-[13px] text-white no-underline transition-colors duration-[140ms] ease-out hover:bg-accent-700 min-[600px]:justify-start min-[600px]:py-3"
+                className="t-button inline-flex items-center whitespace-nowrap border-2 border-divider bg-accent px-[18px] py-3 text-white no-underline transition-colors duration-[140ms] ease-out hover:bg-accent-700"
               >
                 Browse portfolio &rarr;
               </Link>
@@ -83,7 +84,7 @@ export function Hero() {
                   block. */}
               <Link
                 href="/about"
-                className="t-button inline-flex items-center justify-center whitespace-nowrap border-2 border-divider px-[18px] py-[11px] text-fg no-underline transition-colors duration-[140ms] ease-out hover:bg-[rgba(247,246,245,0.1)] min-[600px]:justify-start"
+                className="t-button inline-flex items-center whitespace-nowrap border-2 border-divider px-[18px] py-[10px] text-fg no-underline transition-colors duration-[140ms] ease-out hover:bg-[rgba(247,246,245,0.1)]"
               >
                 About the artist
               </Link>
@@ -107,31 +108,49 @@ export function Hero() {
             ))}
           </div>
 
-          {/* Index: desktop only; on mobile the cards below do this job. */}
-          <div className="hidden flex-1 flex-col justify-end px-8 py-7 min-[900px]:flex">
-            <p className="t-eyebrow mb-3 text-fg-muted">Index</p>
-            <ul>
-              {projects.map((project, i) => (
-                <li
-                  key={project.slug}
-                  className={`border-t border-divider-light ${
-                    i === projects.length - 1 ? "border-b" : ""
-                  }`}
-                >
-                  <Link
-                    href={`/work/${project.slug}`}
-                    className="group flex items-baseline justify-between gap-4 py-[9px] no-underline transition-colors duration-[140ms] ease-out hover:text-accent-400"
+          {/* Index: desktop only; on mobile the cards below do this job.
+              The column is taller than the index needs, so the space above it
+              carries a third route through to the writing rather than sitting
+              empty. */}
+          <div className="hidden flex-1 flex-col justify-between px-8 py-7 min-[900px]:flex">
+            <Link href="/about" className="group block no-underline">
+              <p className="t-eyebrow mb-2 text-fg-muted transition-colors duration-[140ms] ease-out group-hover:text-accent-400">
+                Behind the work
+              </p>
+              <p className="text-[15px] leading-[1.5] text-fg">
+                Why I model, what I have learned so far, and where I want to
+                take it next.{" "}
+                <span className="whitespace-nowrap font-semibold text-accent-400">
+                  Read more &rarr;
+                </span>
+              </p>
+            </Link>
+
+            <div>
+              <p className="t-eyebrow mb-3 text-fg-muted">Index</p>
+              <ul>
+                {projects.map((project, i) => (
+                  <li
+                    key={project.slug}
+                    className={`border-t border-divider-light ${
+                      i === projects.length - 1 ? "border-b" : ""
+                    }`}
                   >
-                    <span className="text-[15px] font-semibold text-fg transition-colors duration-[140ms] ease-out group-hover:text-accent-400">
-                      {project.index}: {project.title}
-                    </span>
-                    <span className="shrink-0 text-[11px] uppercase tracking-nav text-fg-muted transition-colors duration-[140ms] ease-out group-hover:text-accent-400">
-                      {project.discipline}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+                    <Link
+                      href={`/work/${project.slug}`}
+                      className="group flex items-baseline justify-between gap-4 py-[9px] no-underline transition-colors duration-[140ms] ease-out hover:text-accent-400"
+                    >
+                      <span className="text-[15px] font-semibold text-fg transition-colors duration-[140ms] ease-out group-hover:text-accent-400">
+                        {project.index}: {project.title}
+                      </span>
+                      <span className="shrink-0 text-[11px] uppercase tracking-nav text-fg-muted transition-colors duration-[140ms] ease-out group-hover:text-accent-400">
+                        {project.discipline}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
